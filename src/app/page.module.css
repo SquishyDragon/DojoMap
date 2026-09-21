@@ -1,20 +1,25 @@
 .main {
-  display: flex;
+  display: grid;
   min-height: 100vh;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 1rem;
-  padding: 2rem;
-  text-align: center;
+  align-content: start;
+  gap: clamp(3rem, 7vw, 5rem);
+  width: min(100%, 90rem);
+  margin: 0 auto;
+  padding: clamp(2rem, 6vw, 5rem);
 }
 
-.main h1 {
+.intro {
+  display: grid;
+  gap: 0.75rem;
+  max-width: 42rem;
+}
+
+.intro h1 {
   font-size: clamp(2.5rem, 8vw, 5rem);
   letter-spacing: -0.05em;
 }
 
-.main p {
+.intro p {
   color: #525252;
   font-size: 1.125rem;
   line-height: 1.6;

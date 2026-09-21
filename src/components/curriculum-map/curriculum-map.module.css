@@ -1,0 +1,37 @@
+.map {
+  display: grid;
+  gap: 1.5rem;
+  width: 100%;
+}
+
+.header {
+  display: grid;
+  gap: 0.25rem;
+}
+
+.discipline {
+  color: #8f3225;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.title {
+  color: #1f1f1f;
+  font-size: clamp(1.5rem, 4vw, 2rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+}
+
+.ranks {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+  gap: 1rem;
+  list-style: none;
+}
+
+.ranks > li,
+.ranks article {
+  height: 100%;
+}
