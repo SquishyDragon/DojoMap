@@ -19,9 +19,12 @@ export function CurriculumMap({ curriculum }: CurriculumMapProps) {
       </header>
 
       <ol className={styles.ranks}>
-        {curriculum.ranks.map((rank) => (
-          <li key={rank.id}>
+        {curriculum.ranks.map((rank, index) => (
+          <li className={styles.rank} key={rank.id}>
             <RankCard rank={rank} />
+            {index < curriculum.ranks.length - 1 ? (
+              <span aria-hidden="true" className={styles.connector} />
+            ) : null}
           </li>
         ))}
       </ol>

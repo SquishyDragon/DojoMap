@@ -26,12 +26,55 @@
 
 .ranks {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
-  gap: 1rem;
+  width: 100%;
+  max-width: 44rem;
+  margin: 0 auto;
   list-style: none;
 }
 
-.ranks > li,
+.rank {
+  display: grid;
+}
+
 .ranks article {
   height: 100%;
+}
+
+.connector {
+  display: grid;
+  height: 2.5rem;
+  place-items: center;
+  color: #8f3225;
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.connector::before {
+  content: "↓";
+}
+
+@media (min-width: 75rem) {
+  .ranks {
+    max-width: none;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 2.5rem;
+  }
+
+  .rank {
+    position: relative;
+  }
+
+  .connector {
+    position: absolute;
+    top: 50%;
+    right: -2.125rem;
+    width: 1.75rem;
+    height: auto;
+    transform: translateY(-50%);
+  }
+
+  .connector::before {
+    content: "→";
+  }
 }
