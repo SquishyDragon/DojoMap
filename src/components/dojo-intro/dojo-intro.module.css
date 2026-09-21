@@ -1,0 +1,100 @@
+.intro {
+  display: grid;
+  min-height: calc(100svh - clamp(2rem, 12vw, 10rem));
+  align-content: space-between;
+  justify-items: start;
+  gap: 3rem;
+}
+
+.brand,
+.eyebrow {
+  color: #8f3225;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.brand {
+  color: #1f1f1f;
+  letter-spacing: 0.2em;
+}
+
+.identity {
+  display: grid;
+  gap: 0.75rem;
+  max-width: 46rem;
+}
+
+.identity h1 {
+  max-width: 12ch;
+  font-size: clamp(3rem, 10vw, 7rem);
+  line-height: 0.92;
+  letter-spacing: -0.065em;
+}
+
+.location {
+  color: #68645d;
+  font-size: 0.875rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.description {
+  max-width: 34rem;
+  color: #525252;
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  line-height: 1.6;
+}
+
+.pathLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.875rem;
+  color: #1f1f1f;
+  font-size: 0.875rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.pathLink:focus-visible {
+  border-radius: 0.25rem;
+  outline: 3px solid #8f3225;
+  outline-offset: 0.375rem;
+}
+
+.arrow {
+  display: grid;
+  width: 2.25rem;
+  height: 2.25rem;
+  place-items: center;
+  border: 1px solid #c9c4ba;
+  border-radius: 50%;
+  color: #8f3225;
+  font-size: 1.125rem;
+  transition:
+    color 160ms ease,
+    background-color 160ms ease,
+    transform 160ms ease;
+}
+
+.pathLink:hover .arrow {
+  color: #fff;
+  background: #8f3225;
+  transform: translateY(0.2rem);
+}
+
+@media (max-width: 30rem) {
+  .intro {
+    min-height: calc(100svh - 2rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .arrow {
+    transition: none;
+  }
+}

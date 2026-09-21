@@ -1,17 +1,17 @@
 import { CurriculumMap } from "@/components/curriculum-map/curriculum-map";
-import { karateCurriculum } from "@/data/karate-curriculum";
+import { DojoIntro } from "@/components/dojo-intro/dojo-intro";
+import { fortMyersKarate } from "@/data/fort-myers-karate";
 
 import styles from "./page.module.css";
 
 export default function Home() {
   return (
     <main className={styles.main}>
-      <header className={styles.intro}>
-        <h1>DojoMap</h1>
-        <p>A clear path through your martial arts curriculum.</p>
-      </header>
+      <DojoIntro dojo={fortMyersKarate} />
 
-      <CurriculumMap curriculum={karateCurriculum} />
+      <div id="curriculum">
+        <CurriculumMap curriculum={fortMyersKarate.curriculum} />
+      </div>
     </main>
   );
 }
