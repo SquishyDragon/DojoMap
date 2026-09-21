@@ -2,15 +2,6 @@
   display: grid;
   min-height: 100vh;
   align-content: start;
-  gap: clamp(3rem, 7vw, 5rem);
-  width: min(100%, 90rem);
+  width: 100%;
   min-width: 0;
-  margin: 0 auto;
-  padding: clamp(1rem, 6vw, 5rem);
-}
-
-@media (max-width: 30rem) {
-  .main {
-    gap: 2.5rem;
-  }
 }

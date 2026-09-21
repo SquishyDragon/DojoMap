@@ -1,9 +1,12 @@
 .intro {
   display: grid;
-  min-height: calc(100svh - clamp(2rem, 12vw, 10rem));
+  width: min(100%, 90rem);
+  min-height: 100svh;
   align-content: space-between;
   justify-items: start;
   gap: 3rem;
+  margin: 0 auto;
+  padding: clamp(1rem, 6vw, 5rem);
 }
 
 .brand,
@@ -89,7 +92,7 @@
 
 @media (max-width: 30rem) {
   .intro {
-    min-height: calc(100svh - 2rem);
+    gap: 2rem;
   }
 }
 

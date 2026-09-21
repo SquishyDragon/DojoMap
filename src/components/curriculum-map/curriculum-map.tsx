@@ -11,11 +11,13 @@ export function CurriculumMap({ curriculum }: CurriculumMapProps) {
   if (!curriculum) {
     return (
       <section aria-label="Curriculum status" className={styles.map}>
-        <CurriculumStatus
-          description="Curriculum data could not be loaded."
-          label="Curriculum unavailable"
-          title="Nothing to map yet"
-        />
+        <div className={styles.emptySection}>
+          <CurriculumStatus
+            description="Curriculum data could not be loaded."
+            label="Curriculum unavailable"
+            title="Nothing to map yet"
+          />
+        </div>
       </section>
     );
   }
@@ -25,21 +27,22 @@ export function CurriculumMap({ curriculum }: CurriculumMapProps) {
       aria-label={`${curriculum.name} rank progression`}
       className={styles.map}
     >
-      <header className={styles.header}>
-        <p className={styles.discipline}>{curriculum.discipline}</p>
-        <p className={styles.title}>{curriculum.name}</p>
-      </header>
-
       {curriculum.ranks.length === 0 ? (
-        <CurriculumStatus
-          description="This curriculum does not have any ranks to display."
-          label="Curriculum empty"
-          title="No ranks yet"
-        />
+        <div className={styles.emptySection}>
+          <CurriculumHeader curriculum={curriculum} />
+          <CurriculumStatus
+            description="This curriculum does not have any ranks to display."
+            label="Curriculum empty"
+            title="No ranks yet"
+          />
+        </div>
       ) : (
         <ol className={styles.ranks}>
           {curriculum.ranks.map((rank, index) => (
-            <li className={styles.rank} key={rank.id}>
+            <li className={styles.rank} id={rank.id} key={rank.id}>
+              {index === 0 ? (
+                <CurriculumHeader curriculum={curriculum} />
+              ) : null}
               <RankCard rank={rank} />
               {index < curriculum.ranks.length - 1 ? (
                 <span aria-hidden="true" className={styles.connector} />
@@ -49,6 +52,19 @@ export function CurriculumMap({ curriculum }: CurriculumMapProps) {
         </ol>
       )}
     </section>
+  );
+}
+
+type CurriculumHeaderProps = {
+  curriculum: Curriculum;
+};
+
+function CurriculumHeader({ curriculum }: CurriculumHeaderProps) {
+  return (
+    <header className={styles.header}>
+      <p className={styles.discipline}>{curriculum.discipline}</p>
+      <p className={styles.title}>{curriculum.name}</p>
+    </header>
   );
 }
 

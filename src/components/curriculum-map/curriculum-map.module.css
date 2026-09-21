@@ -1,11 +1,13 @@
 .map {
   display: grid;
-  gap: 1.5rem;
   width: 100%;
   min-width: 0;
 }
 
 .header {
+  position: absolute;
+  top: clamp(1rem, 6vw, 5rem);
+  left: clamp(1rem, 6vw, 5rem);
   display: grid;
   gap: 0.25rem;
 }
@@ -29,24 +31,34 @@
   display: grid;
   width: 100%;
   min-width: 0;
-  max-width: 44rem;
-  margin: 0 auto;
   list-style: none;
 }
 
 .rank {
+  position: relative;
   display: grid;
+  width: 100%;
+  min-height: 100svh;
   min-width: 0;
+  align-items: center;
+  padding: clamp(5.5rem, 11vw, 8rem) clamp(1rem, 6vw, 5rem);
+  scroll-margin-block: 0;
 }
 
 .ranks article {
-  height: 100%;
+  width: min(100%, 44rem);
+  margin: 0 auto;
 }
 
 .connector {
+  position: absolute;
+  bottom: clamp(1rem, 4vw, 2.5rem);
+  left: 50%;
   display: grid;
+  width: 2.5rem;
   height: 2.5rem;
   place-items: center;
+  transform: translateX(-50%);
   color: #8f3225;
   font-size: 1.5rem;
   font-weight: 700;
@@ -70,6 +82,14 @@
   text-align: center;
 }
 
+.emptySection {
+  position: relative;
+  display: grid;
+  min-height: 100svh;
+  align-items: center;
+  padding: clamp(5.5rem, 11vw, 8rem) clamp(1rem, 6vw, 5rem);
+}
+
 .emptyState h2 {
   font-size: 1.5rem;
 }
@@ -87,27 +107,9 @@
   text-transform: uppercase;
 }
 
-@media (min-width: 84rem) {
-  .ranks {
-    max-width: none;
-    grid-template-columns: repeat(5, minmax(0, 1fr));
-    gap: 2.5rem;
-  }
-
-  .rank {
-    position: relative;
-  }
-
-  .connector {
-    position: absolute;
-    top: 50%;
-    right: -2.125rem;
-    width: 1.75rem;
-    height: auto;
-    transform: translateY(-50%);
-  }
-
-  .connector::before {
-    content: "→";
+@media (max-height: 42rem) {
+  .rank,
+  .emptySection {
+    min-height: 42rem;
   }
 }

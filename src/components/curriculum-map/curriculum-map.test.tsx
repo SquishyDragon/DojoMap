@@ -40,7 +40,7 @@ const emptyCurriculum = {
 
 describe("CurriculumMap", () => {
   it("renders every rank exactly once in dataset order", () => {
-    const { getAllByRole } = render(
+    const { container, getAllByRole } = render(
       <CurriculumMap curriculum={curriculumInDatasetOrder} />,
     );
 
@@ -51,6 +51,9 @@ describe("CurriculumMap", () => {
       "White Belt",
       "Orange Belt",
     ]);
+    expect(
+      Array.from(container.querySelectorAll("ol > li"), (section) => section.id),
+    ).toEqual(["blue-belt", "white-belt", "orange-belt"]);
   });
 
   it("renders an intentional state when the curriculum is missing", () => {
