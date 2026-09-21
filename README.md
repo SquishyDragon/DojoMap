@@ -1,36 +1,65 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# DojoMap
 
-## Getting Started
+DojoMap is a simple curriculum map for martial arts students. It presents an ordered path through ranks so students can see what they are learning now, what each rank requires, and what comes next.
 
-First, run the development server:
+[View the live app](https://dojomap.natetread.chatgpt.site/)
+
+## v0.1.0 scope
+
+This first release is a focused, read-only demonstration that:
+
+- displays a five-rank sample karate curriculum in progression order;
+- gives every rank a clear belt indicator and categorized requirements;
+- makes the progression between ranks visible;
+- adapts to phone and desktop widths without horizontal page overflow; and
+- handles missing or empty curriculum data with an intentional message.
+
+The included curriculum is illustrative sample data, not an official or universal karate syllabus.
+
+## Stack
+
+- [Next.js](https://nextjs.org/) App Router
+- [React](https://react.dev/) and TypeScript
+- CSS Modules
+- [Vitest](https://vitest.dev/), Testing Library, and jsdom
+- Static export deployed with OpenAI Sites
+
+## Local setup
+
+You will need a current Node.js LTS release and npm.
 
 ```bash
+git clone https://github.com/SquishyDragon/DojoMap.git
+cd DojoMap
+npm ci
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Quality checks
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Run each project check independently:
 
-## Learn More
+```bash
+npm run lint
+npm test
+npm run build
+```
 
-To learn more about Next.js, take a look at the following resources:
+The test suite covers the curriculum model, sample data, rank rendering, ordering, progression cues, requirement content, and empty/error-safe states.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Project structure
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```text
+src/app/          Page, metadata, and global styles
+src/components/   Curriculum and rank UI components
+src/data/         Sample curriculum data
+src/types/        Curriculum domain model
+```
 
-## Deploy on Vercel
+The production build is configured as a static export in `next.config.ts`; generated files are written to `out/`.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Release plan
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+The complete v0.1.0 work items and their testable outcomes are tracked in [V0.1.0.md](./V0.1.0.md).
