@@ -4,8 +4,9 @@
   align-content: start;
   gap: clamp(3rem, 7vw, 5rem);
   width: min(100%, 90rem);
+  min-width: 0;
   margin: 0 auto;
-  padding: clamp(2rem, 6vw, 5rem);
+  padding: clamp(1rem, 6vw, 5rem);
 }
 
 .intro {
@@ -23,4 +24,14 @@
   color: #525252;
   font-size: 1.125rem;
   line-height: 1.6;
+}
+
+@media (max-width: 30rem) {
+  .main {
+    gap: 2.5rem;
+  }
+
+  .intro p {
+    font-size: 1rem;
+  }
 }

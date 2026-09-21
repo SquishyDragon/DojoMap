@@ -2,6 +2,7 @@
   display: grid;
   gap: 1.5rem;
   width: 100%;
+  min-width: 0;
 }
 
 .header {
@@ -27,6 +28,7 @@
 .ranks {
   display: grid;
   width: 100%;
+  min-width: 0;
   max-width: 44rem;
   margin: 0 auto;
   list-style: none;
@@ -34,6 +36,7 @@
 
 .rank {
   display: grid;
+  min-width: 0;
 }
 
 .ranks article {
@@ -54,7 +57,7 @@
   content: "↓";
 }
 
-@media (min-width: 75rem) {
+@media (min-width: 84rem) {
   .ranks {
     max-width: none;
     grid-template-columns: repeat(5, minmax(0, 1fr));
