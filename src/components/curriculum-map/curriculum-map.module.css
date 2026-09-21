@@ -57,6 +57,36 @@
   content: "↓";
 }
 
+.emptyState {
+  display: grid;
+  gap: 0.625rem;
+  width: 100%;
+  max-width: 44rem;
+  margin: 0 auto;
+  padding: clamp(1.5rem, 5vw, 2.5rem);
+  border: 1px dashed #c9c4ba;
+  border-radius: 1rem;
+  background: rgb(255 255 255 / 55%);
+  text-align: center;
+}
+
+.emptyState h2 {
+  font-size: 1.5rem;
+}
+
+.emptyState > p:last-child {
+  color: #68645d;
+  line-height: 1.6;
+}
+
+.statusLabel {
+  color: #8f3225;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
 @media (min-width: 84rem) {
   .ranks {
     max-width: none;
