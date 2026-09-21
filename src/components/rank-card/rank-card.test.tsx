@@ -23,7 +23,7 @@ const orangeBelt = {
 } satisfies Rank;
 
 describe("RankCard", () => {
-  it("renders the supplied rank name and belt details", () => {
+  it("renders the supplied rank name, belt details, and requirements", () => {
     render(<RankCard rank={orangeBelt} />);
 
     expect(
@@ -31,5 +31,9 @@ describe("RankCard", () => {
     ).toBeDefined();
     expect(screen.getByText("Rank 3")).toBeDefined();
     expect(screen.getByText("Orange belt")).toBeDefined();
+    expect(
+      screen.getByRole("heading", { level: 3, name: "Basics" }),
+    ).toBeDefined();
+    expect(screen.getByText("Inside block")).toBeDefined();
   });
 });

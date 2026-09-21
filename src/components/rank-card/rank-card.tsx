@@ -22,6 +22,20 @@ export function RankCard({ rank }: RankCardProps) {
         />
         <span>{rank.belt.name} belt</span>
       </div>
+
+      <div className={styles.requirements}>
+        <p className={styles.requirementsLabel}>Requirements</p>
+        {rank.requirements.map((requirement) => (
+          <div className={styles.category} key={requirement.id}>
+            <h3>{requirement.category}</h3>
+            <ul className={styles.items}>
+              {requirement.items.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
     </article>
   );
 }
