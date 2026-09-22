@@ -30,7 +30,21 @@ export function RankCard({ rank }: RankCardProps) {
             <h3>{requirement.category}</h3>
             <ul className={styles.items}>
               {requirement.items.map((item) => (
-                <li key={item}>{item}</li>
+                <li
+                  className={
+                    item.resource?.type === "external"
+                      ? styles.resourceItem
+                      : undefined
+                  }
+                  key={item.id}
+                >
+                  <span>{item.name}</span>
+                  {item.resource?.type === "external" ? (
+                    <span aria-label="External resource" className={styles.resourceIcon}>
+                      ↗
+                    </span>
+                  ) : null}
+                </li>
               ))}
             </ul>
           </div>

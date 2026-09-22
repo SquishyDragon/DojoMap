@@ -49,7 +49,9 @@ const variableCurriculum = {
         {
           id: "white-belt-form",
           category: "Forms",
-          items: ["Basic Form 1"],
+          items: [
+            { id: "basic-form-1", name: "Basic Form 1", type: "form" },
+          ],
         },
       ],
     },
@@ -59,12 +61,21 @@ const variableCurriculum = {
         {
           id: "yellow-belt-techniques",
           category: "Techniques",
-          items: ["Front kick", "High block"],
+          items: [
+            { id: "front-kick", name: "Front kick", type: "technique" },
+            { id: "high-block", name: "High block", type: "technique" },
+          ],
         },
         {
           id: "yellow-belt-knowledge",
           category: "Knowledge",
-          items: ["Dojo etiquette"],
+          items: [
+            {
+              id: "dojo-etiquette",
+              name: "Dojo etiquette",
+              type: "knowledge",
+            },
+          ],
         },
       ],
     },

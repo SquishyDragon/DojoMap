@@ -17,12 +17,29 @@ const orangeBelt = {
     {
       id: "orange-belt-basics",
       category: "Basics",
-      items: ["Inside block", "Roundhouse kick"],
+      items: [
+        { id: "inside-block", name: "Inside block", type: "technique" },
+        {
+          id: "roundhouse-kick",
+          name: "Roundhouse kick",
+          type: "technique",
+          resource: {
+            type: "external",
+            url: "https://example.com/roundhouse-kick",
+          },
+        },
+      ],
     },
     {
       id: "orange-belt-form",
       category: "Form",
-      items: ["Foundations form 2"],
+      items: [
+        {
+          id: "foundations-form-2",
+          name: "Foundations form 2",
+          type: "form",
+        },
+      ],
     },
   ],
 } satisfies Rank;
@@ -44,6 +61,7 @@ describe("RankCard", () => {
     ).toBeDefined();
     expect(screen.getByText("Inside block")).toBeDefined();
     expect(screen.getByText("Roundhouse kick")).toBeDefined();
+    expect(screen.getByLabelText("External resource")).toBeDefined();
     expect(screen.getByText("Foundations form 2")).toBeDefined();
   });
 });

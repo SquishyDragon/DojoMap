@@ -1,7 +1,24 @@
+export type CurriculumResource =
+  | {
+      type: "external";
+      url: string;
+    }
+  | {
+      type: "internal";
+      slug: string;
+    };
+
+export type CurriculumItem = {
+  id: string;
+  name: string;
+  type: "form" | "technique" | "knowledge";
+  resource?: CurriculumResource;
+};
+
 export type Requirement = {
   id: string;
   category: string;
-  items: readonly string[];
+  items: readonly CurriculumItem[];
 };
 
 export type Rank = {

@@ -87,6 +87,18 @@
   color: #8f3225;
 }
 
+.resourceItem {
+  color: #1f1f1f;
+  font-weight: 700;
+}
+
+.resourceIcon {
+  margin-left: 0.375rem;
+  color: #8f3225;
+  font-size: 0.75em;
+  vertical-align: super;
+}
+
 @media (max-width: 30rem) {
   .card {
     gap: 1.25rem;

@@ -19,7 +19,18 @@ const sampleCurriculum = {
         {
           id: "white-belt-basics",
           category: "Basics",
-          items: ["Front stance", "Straight punch"],
+          items: [
+            {
+              id: "front-stance",
+              name: "Front stance",
+              type: "technique",
+            },
+            {
+              id: "straight-punch",
+              name: "Straight punch",
+              type: "technique",
+            },
+          ],
         },
       ],
     },
@@ -32,6 +43,6 @@ describe("Curriculum model", () => {
 
     expect(firstRank.order).toBe(1);
     expect(firstRank.belt.name).toBe("White");
-    expect(firstRank.requirements[0].items).toContain("Front stance");
+    expect(firstRank.requirements[0].items[0].name).toBe("Front stance");
   });
 });
