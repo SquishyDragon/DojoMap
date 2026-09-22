@@ -18,7 +18,12 @@ const orangeBelt = {
       id: "orange-belt-basics",
       category: "Basics",
       items: [
-        { id: "inside-block", name: "Inside block", type: "technique" },
+        {
+          id: "inside-block",
+          name: "Inside block",
+          type: "technique",
+          resource: { type: "internal", slug: "inside-block" },
+        },
         {
           id: "roundhouse-kick",
           name: "Roundhouse kick",
@@ -70,6 +75,8 @@ describe("RankCard", () => {
     );
     expect(resourceLink.getAttribute("target")).toBe("_blank");
     expect(resourceLink.getAttribute("rel")).toContain("noreferrer");
+    expect(screen.getByText("Inside block").closest("a")).toBeNull();
+    expect(screen.getAllByRole("link")).toHaveLength(1);
     expect(screen.getByText("Foundations form 2")).toBeDefined();
   });
 });

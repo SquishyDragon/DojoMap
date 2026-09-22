@@ -107,6 +107,10 @@ export const karateCurriculum = {
               id: "roundhouse-kick",
               name: "Roundhouse kick",
               type: "technique",
+              resource: {
+                type: "internal",
+                slug: "roundhouse-kick",
+              },
             },
           ],
         },

@@ -20,4 +20,21 @@ describe("karateCurriculum", () => {
       }
     }
   });
+
+  it("can identify a future internal content destination", () => {
+    const orangeBelt = karateCurriculum.ranks.find(
+      (rank) => rank.id === "orange-belt",
+    );
+    const basics = orangeBelt?.requirements.find(
+      (requirement) => requirement.id === "orange-belt-basics",
+    );
+    const roundhouseKick = basics?.items.find(
+      (item) => item.id === "roundhouse-kick",
+    );
+
+    expect(roundhouseKick?.resource).toEqual({
+      type: "internal",
+      slug: "roundhouse-kick",
+    });
+  });
 });
