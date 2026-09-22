@@ -89,7 +89,25 @@
 
 .resourceItem {
   color: #1f1f1f;
+}
+
+.resourceLink {
+  border-radius: 0.25rem;
+  color: inherit;
   font-weight: 700;
+  text-decoration-color: rgb(143 50 37 / 40%);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+}
+
+.resourceLink:hover {
+  color: #8f3225;
+  text-decoration-color: currentcolor;
+}
+
+.resourceLink:focus-visible {
+  outline: 3px solid #8f3225;
+  outline-offset: 0.25rem;
 }
 
 .resourceIcon {

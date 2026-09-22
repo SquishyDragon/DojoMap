@@ -38,12 +38,25 @@ export function RankCard({ rank }: RankCardProps) {
                   }
                   key={item.id}
                 >
-                  <span>{item.name}</span>
                   {item.resource?.type === "external" ? (
-                    <span aria-label="External resource" className={styles.resourceIcon}>
-                      ↗
-                    </span>
-                  ) : null}
+                    <a
+                      aria-label={`${item.name} (opens in new tab)`}
+                      className={styles.resourceLink}
+                      href={item.resource.url}
+                      rel="noopener noreferrer"
+                      target="_blank"
+                    >
+                      <span>{item.name}</span>
+                      <span
+                        aria-hidden="true"
+                        className={styles.resourceIcon}
+                      >
+                        ↗
+                      </span>
+                    </a>
+                  ) : (
+                    <span>{item.name}</span>
+                  )}
                 </li>
               ))}
             </ul>

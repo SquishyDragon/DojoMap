@@ -61,7 +61,15 @@ describe("RankCard", () => {
     ).toBeDefined();
     expect(screen.getByText("Inside block")).toBeDefined();
     expect(screen.getByText("Roundhouse kick")).toBeDefined();
-    expect(screen.getByLabelText("External resource")).toBeDefined();
+    const resourceLink = screen.getByRole("link", {
+      name: "Roundhouse kick (opens in new tab)",
+    });
+
+    expect(resourceLink.getAttribute("href")).toBe(
+      "https://example.com/roundhouse-kick",
+    );
+    expect(resourceLink.getAttribute("target")).toBe("_blank");
+    expect(resourceLink.getAttribute("rel")).toContain("noreferrer");
     expect(screen.getByText("Foundations form 2")).toBeDefined();
   });
 });
