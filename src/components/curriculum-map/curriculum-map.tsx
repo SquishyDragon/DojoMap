@@ -52,7 +52,26 @@ export function CurriculumMap({ curriculum }: CurriculumMapProps) {
               {index === 0 ? (
                 <CurriculumHeader curriculum={curriculum} />
               ) : null}
-              <RankCard rank={rank} />
+              <div className={styles.rankContent}>
+                <RankCard rank={rank} />
+                {index === curriculum.ranks.length - 1 ? (
+                  <footer className={styles.conclusion}>
+                    <span aria-hidden="true" className={styles.conclusionMark}>
+                      ★
+                    </span>
+                    <div>
+                      <p className={styles.conclusionLabel}>Path mapped</p>
+                      <p className={styles.conclusionTitle}>
+                        Keep moving forward
+                      </p>
+                      <p className={styles.conclusionDescription}>
+                        You&apos;ve reached the end of this curriculum map. The
+                        journey continues in the dojo.
+                      </p>
+                    </div>
+                  </footer>
+                ) : null}
+              </div>
               {index < curriculum.ranks.length - 1 ? (
                 <span aria-hidden="true" className={styles.connector} />
               ) : null}

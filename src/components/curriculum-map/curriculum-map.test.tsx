@@ -140,6 +140,20 @@ describe("CurriculumMap", () => {
     expect(yellowBelt.getByText("Dojo etiquette")).toBeDefined();
   });
 
+  it("ends the final rank with an intentional journey conclusion", () => {
+    const { container, getByText } = render(
+      <CurriculumMap curriculum={curriculumInDatasetOrder} />,
+    );
+    const rankSections = Array.from(
+      container.querySelectorAll<HTMLElement>("ol > li"),
+    );
+
+    expect(within(rankSections[0]).queryByText("Path mapped")).toBeNull();
+    expect(within(rankSections[1]).queryByText("Path mapped")).toBeNull();
+    expect(within(rankSections[2]).getByText("Path mapped")).toBeDefined();
+    expect(getByText("Keep moving forward")).toBeDefined();
+  });
+
   it("renders an intentional state when the curriculum is missing", () => {
     const { getByRole } = render(<CurriculumMap />);
 
