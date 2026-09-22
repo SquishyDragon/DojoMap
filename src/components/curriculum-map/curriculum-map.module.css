@@ -36,6 +36,7 @@
 
 .rank {
   position: relative;
+  isolation: isolate;
   display: grid;
   width: 100%;
   min-height: 100svh;
@@ -45,6 +46,24 @@
   scroll-margin-block: 0;
   scroll-snap-align: start;
   scroll-snap-stop: always;
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--belt-color) 18%, #f7f5f0) 0%,
+    #f7f5f0 58%
+  );
+}
+
+.rank::before {
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: clamp(0.375rem, 0.8vw, 0.75rem);
+  border-right: 1px solid rgb(31 31 31 / 12%);
+  background: var(--belt-color);
+  box-shadow: 0.25rem 0 1.5rem rgb(31 31 31 / 8%);
+  content: "";
 }
 
 .ranks article {

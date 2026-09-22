@@ -51,9 +51,20 @@ describe("CurriculumMap", () => {
       "White Belt",
       "Orange Belt",
     ]);
+    const rankSections = Array.from(
+      container.querySelectorAll<HTMLElement>("ol > li"),
+    );
+
+    expect(rankSections.map((section) => section.id)).toEqual([
+      "blue-belt",
+      "white-belt",
+      "orange-belt",
+    ]);
     expect(
-      Array.from(container.querySelectorAll("ol > li"), (section) => section.id),
-    ).toEqual(["blue-belt", "white-belt", "orange-belt"]);
+      rankSections.map((section) =>
+        section.style.getPropertyValue("--belt-color"),
+      ),
+    ).toEqual(["#cccccc", "#cccccc", "#cccccc"]);
   });
 
   it("renders an intentional state when the curriculum is missing", () => {

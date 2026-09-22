@@ -1,3 +1,5 @@
+import type { CSSProperties } from "react";
+
 import { RankCard } from "@/components/rank-card/rank-card";
 import type { Curriculum } from "@/domain/curriculum";
 
@@ -39,7 +41,12 @@ export function CurriculumMap({ curriculum }: CurriculumMapProps) {
       ) : (
         <ol className={styles.ranks}>
           {curriculum.ranks.map((rank, index) => (
-            <li className={styles.rank} id={rank.id} key={rank.id}>
+            <li
+              className={styles.rank}
+              id={rank.id}
+              key={rank.id}
+              style={{ "--belt-color": rank.belt.color } as CSSProperties}
+            >
               {index === 0 ? (
                 <CurriculumHeader curriculum={curriculum} />
               ) : null}
