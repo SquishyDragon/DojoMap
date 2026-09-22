@@ -1,4 +1,4 @@
-import { cleanup, render } from "@testing-library/react";
+import { cleanup, render, within } from "@testing-library/react";
 import { afterEach, describe, expect, it } from "vitest";
 
 import type { Curriculum, Rank } from "@/domain/curriculum";
@@ -38,6 +38,39 @@ const emptyCurriculum = {
   ranks: [],
 } satisfies Curriculum;
 
+const variableCurriculum = {
+  id: "variable-test",
+  name: "Variable Test",
+  discipline: "Karate",
+  ranks: [
+    {
+      ...makeRank("white-belt", "White Belt", 1),
+      requirements: [
+        {
+          id: "white-belt-form",
+          category: "Forms",
+          items: ["Basic Form 1"],
+        },
+      ],
+    },
+    {
+      ...makeRank("yellow-belt", "Yellow Belt", 2),
+      requirements: [
+        {
+          id: "yellow-belt-techniques",
+          category: "Techniques",
+          items: ["Front kick", "High block"],
+        },
+        {
+          id: "yellow-belt-knowledge",
+          category: "Knowledge",
+          items: ["Dojo etiquette"],
+        },
+      ],
+    },
+  ],
+} satisfies Curriculum;
+
 describe("CurriculumMap", () => {
   it("renders every rank exactly once in dataset order", () => {
     const { container, getAllByRole } = render(
@@ -65,6 +98,35 @@ describe("CurriculumMap", () => {
         section.style.getPropertyValue("--belt-color"),
       ),
     ).toEqual(["#cccccc", "#cccccc", "#cccccc"]);
+  });
+
+  it("renders ranks with different category and item counts", () => {
+    const { container } = render(
+      <CurriculumMap curriculum={variableCurriculum} />,
+    );
+    const rankSections = Array.from(
+      container.querySelectorAll<HTMLElement>("ol > li"),
+    );
+    const whiteBelt = within(rankSections[0]);
+    const yellowBelt = within(rankSections[1]);
+
+    expect(
+      whiteBelt.getAllByRole("heading", { level: 3 }).map(({ textContent }) =>
+        textContent,
+      ),
+    ).toEqual(["Forms"]);
+    expect(whiteBelt.getAllByRole("listitem")).toHaveLength(1);
+    expect(whiteBelt.getByText("Basic Form 1")).toBeDefined();
+
+    expect(
+      yellowBelt
+        .getAllByRole("heading", { level: 3 })
+        .map(({ textContent }) => textContent),
+    ).toEqual(["Techniques", "Knowledge"]);
+    expect(yellowBelt.getAllByRole("listitem")).toHaveLength(3);
+    expect(yellowBelt.getByText("Front kick")).toBeDefined();
+    expect(yellowBelt.getByText("High block")).toBeDefined();
+    expect(yellowBelt.getByText("Dojo etiquette")).toBeDefined();
   });
 
   it("renders an intentional state when the curriculum is missing", () => {
