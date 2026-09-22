@@ -23,8 +23,10 @@ describe("Home", () => {
       name: "Foundations Karate rank progression",
     });
     const rankNames = within(curriculum)
-      .getAllByRole("heading", { level: 2 })
-      .map(({ textContent }) => textContent);
+      .getAllByRole("article")
+      .map((article) =>
+        within(article).getByRole("heading", { level: 2 }).textContent,
+      );
 
     expect(rankNames).toEqual([
       "White Belt",
@@ -54,7 +56,9 @@ describe("Home", () => {
         .getAttribute("href"),
     ).toBe("https://en.wikipedia.org/wiki/Front_kick");
     expect(screen.getByText("Roundhouse kick").closest("a")).toBeNull();
-    expect(screen.getByText("Keep moving forward")).toBeDefined();
+    expect(
+      screen.getByRole("heading", { level: 2, name: "The journey continues" }),
+    ).toBeDefined();
   });
 
   it("renders the dojo opening before its curriculum", () => {
@@ -80,6 +84,7 @@ describe("Home", () => {
       ["orange-belt", 1600],
       ["green-belt", 2400],
       ["blue-belt", 3200],
+      ["path-mapped", 4000],
     ]);
 
     Object.defineProperty(scrollContainer, "clientHeight", { value: 800 });

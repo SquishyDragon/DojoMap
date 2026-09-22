@@ -39,45 +39,57 @@ export function CurriculumMap({ curriculum }: CurriculumMapProps) {
           />
         </div>
       ) : (
-        <ol className={styles.ranks}>
-          {curriculum.ranks.map((rank, index) => (
-            <li
-              className={styles.rank}
-              data-journey-section
-              data-rank-id={rank.id}
-              id={rank.id}
-              key={rank.id}
-              style={{ "--belt-color": rank.belt.color } as CSSProperties}
-            >
-              {index === 0 ? (
-                <CurriculumHeader curriculum={curriculum} />
-              ) : null}
-              <div className={styles.rankContent}>
-                <RankCard rank={rank} />
-                {index === curriculum.ranks.length - 1 ? (
-                  <footer className={styles.conclusion}>
-                    <span aria-hidden="true" className={styles.conclusionMark}>
-                      ★
-                    </span>
-                    <div>
-                      <p className={styles.conclusionLabel}>Path mapped</p>
-                      <p className={styles.conclusionTitle}>
-                        Keep moving forward
-                      </p>
-                      <p className={styles.conclusionDescription}>
-                        You&apos;ve reached the end of this curriculum map. The
-                        journey continues in the dojo.
-                      </p>
-                    </div>
-                  </footer>
+        <>
+          <ol className={styles.ranks}>
+            {curriculum.ranks.map((rank, index) => (
+              <li
+                className={styles.rank}
+                data-journey-section
+                data-rank-id={rank.id}
+                id={rank.id}
+                key={rank.id}
+                style={{ "--belt-color": rank.belt.color } as CSSProperties}
+              >
+                {index === 0 ? (
+                  <CurriculumHeader curriculum={curriculum} />
                 ) : null}
-              </div>
-              {index < curriculum.ranks.length - 1 ? (
+                <div className={styles.rankContent}>
+                  <RankCard rank={rank} />
+                </div>
                 <span aria-hidden="true" className={styles.connector} />
-              ) : null}
-            </li>
-          ))}
-        </ol>
+              </li>
+            ))}
+          </ol>
+          <section
+            aria-labelledby="path-mapped-title"
+            className={styles.conclusionSection}
+            data-journey-section
+            data-rank-id={curriculum.ranks.at(-1)?.id}
+            id="path-mapped"
+            style={
+              {
+                "--belt-color": curriculum.ranks.at(-1)?.belt.color,
+              } as CSSProperties
+            }
+          >
+            <div className={styles.conclusion}>
+              <span aria-hidden="true" className={styles.conclusionMark}>
+                ★
+              </span>
+              <div>
+                <p className={styles.conclusionLabel}>Current map complete</p>
+                <h2 className={styles.conclusionTitle} id="path-mapped-title">
+                  The journey continues
+                </h2>
+                <p className={styles.conclusionDescription}>
+                  This map ends here, but training does not. It is a guide to
+                  the current curriculum—not a record of every lesson,
+                  milestone, or degree ahead.
+                </p>
+              </div>
+            </div>
+          </section>
+        </>
       )}
     </section>
   );

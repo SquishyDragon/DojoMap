@@ -88,7 +88,9 @@ describe("CurriculumMap", () => {
       <CurriculumMap curriculum={curriculumInDatasetOrder} />,
     );
 
-    const rankHeadings = getAllByRole("heading", { level: 2 });
+    const rankHeadings = getAllByRole("article").map((article) =>
+      within(article).getByRole("heading", { level: 2 }),
+    );
 
     expect(rankHeadings.map((heading) => heading.textContent)).toEqual([
       "Blue Belt",
@@ -140,7 +142,7 @@ describe("CurriculumMap", () => {
     expect(yellowBelt.getByText("Dojo etiquette")).toBeDefined();
   });
 
-  it("ends the final rank with an intentional journey conclusion", () => {
+  it("ends with a separate, intentional journey conclusion", () => {
     const { container, getByText } = render(
       <CurriculumMap curriculum={curriculumInDatasetOrder} />,
     );
@@ -148,10 +150,20 @@ describe("CurriculumMap", () => {
       container.querySelectorAll<HTMLElement>("ol > li"),
     );
 
-    expect(within(rankSections[0]).queryByText("Path mapped")).toBeNull();
-    expect(within(rankSections[1]).queryByText("Path mapped")).toBeNull();
-    expect(within(rankSections[2]).getByText("Path mapped")).toBeDefined();
-    expect(getByText("Keep moving forward")).toBeDefined();
+    const conclusion = container.querySelector<HTMLElement>("#path-mapped")!;
+
+    expect(rankSections).toHaveLength(3);
+    expect(
+      rankSections.every(
+        (section) => within(section).queryByText("Current map complete") === null,
+      ),
+    ).toBe(true);
+    expect(conclusion.hasAttribute("data-journey-section")).toBe(true);
+    expect(conclusion.dataset.rankId).toBe("orange-belt");
+    expect(getByText("Current map complete")).toBeDefined();
+    expect(
+      getByText("The journey continues", { selector: "h2" }),
+    ).toBeDefined();
   });
 
   it.each([undefined, null])(
