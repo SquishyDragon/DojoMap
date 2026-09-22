@@ -1,4 +1,10 @@
-import { cleanup, fireEvent, render, screen } from "@testing-library/react";
+import {
+  cleanup,
+  fireEvent,
+  render,
+  screen,
+  within,
+} from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 import Home from "./page";
@@ -6,6 +12,51 @@ import Home from "./page";
 afterEach(cleanup);
 
 describe("Home", () => {
+  it("renders the complete supported curriculum journey", () => {
+    render(<Home />);
+
+    expect(
+      screen.getByRole("heading", { level: 1, name: "Fort Myers Karate" }),
+    ).toBeDefined();
+
+    const curriculum = screen.getByRole("region", {
+      name: "Foundations Karate rank progression",
+    });
+    const rankNames = within(curriculum)
+      .getAllByRole("heading", { level: 2 })
+      .map(({ textContent }) => textContent);
+
+    expect(rankNames).toEqual([
+      "White Belt",
+      "Yellow Belt",
+      "Orange Belt",
+      "Green Belt",
+      "Blue Belt",
+    ]);
+    const navigator = screen.getByRole("navigation", {
+      name: "Belt progression",
+    });
+
+    expect(
+      within(navigator)
+        .getAllByRole("link")
+        .map((link) => link.getAttribute("href")),
+    ).toEqual([
+      "#white-belt",
+      "#yellow-belt",
+      "#orange-belt",
+      "#green-belt",
+      "#blue-belt",
+    ]);
+    expect(
+      screen
+        .getByRole("link", { name: "Front kick (opens in new tab)" })
+        .getAttribute("href"),
+    ).toBe("https://en.wikipedia.org/wiki/Front_kick");
+    expect(screen.getByText("Roundhouse kick").closest("a")).toBeNull();
+    expect(screen.getByText("Keep moving forward")).toBeDefined();
+  });
+
   it("renders the dojo opening before its curriculum", () => {
     render(<Home />);
 
