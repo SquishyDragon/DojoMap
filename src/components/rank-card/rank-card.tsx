@@ -6,6 +6,22 @@ type RankCardProps = {
   rank: Rank;
 };
 
+function hasAvailableExternalResource(
+  resource: Rank["requirements"][number]["items"][number]["resource"],
+) {
+  if (resource?.type !== "external") {
+    return false;
+  }
+
+  try {
+    const url = new URL(resource.url);
+
+    return url.protocol === "http:" || url.protocol === "https:";
+  } catch {
+    return false;
+  }
+}
+
 export function RankCard({ rank }: RankCardProps) {
   return (
     <article className={styles.card}>
@@ -29,36 +45,38 @@ export function RankCard({ rank }: RankCardProps) {
           <div className={styles.category} key={requirement.id}>
             <h3>{requirement.category}</h3>
             <ul className={styles.items}>
-              {requirement.items.map((item) => (
-                <li
-                  className={
-                    item.resource?.type === "external"
-                      ? styles.resourceItem
-                      : undefined
-                  }
-                  key={item.id}
-                >
-                  {item.resource?.type === "external" ? (
-                    <a
-                      aria-label={`${item.name} (opens in new tab)`}
-                      className={styles.resourceLink}
-                      href={item.resource.url}
-                      rel="noopener noreferrer"
-                      target="_blank"
-                    >
-                      <span>{item.name}</span>
-                      <span
-                        aria-hidden="true"
-                        className={styles.resourceIcon}
+              {requirement.items.map((item) => {
+                const hasDestination = hasAvailableExternalResource(
+                  item.resource,
+                );
+
+                return (
+                  <li
+                    className={hasDestination ? styles.resourceItem : undefined}
+                    key={item.id}
+                  >
+                    {hasDestination && item.resource?.type === "external" ? (
+                      <a
+                        aria-label={`${item.name} (opens in new tab)`}
+                        className={styles.resourceLink}
+                        href={item.resource.url}
+                        rel="noopener noreferrer"
+                        target="_blank"
                       >
-                        ↗
-                      </span>
-                    </a>
-                  ) : (
-                    <span>{item.name}</span>
-                  )}
-                </li>
-              ))}
+                        <span>{item.name}</span>
+                        <span
+                          aria-hidden="true"
+                          className={styles.resourceIcon}
+                        >
+                          ↗
+                        </span>
+                      </a>
+                    ) : (
+                      <span>{item.name}</span>
+                    )}
+                  </li>
+                );
+              })}
             </ul>
           </div>
         ))}

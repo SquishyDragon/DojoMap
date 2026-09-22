@@ -44,6 +44,12 @@ const orangeBelt = {
           name: "Foundations form 2",
           type: "form",
         },
+        {
+          id: "unavailable-video",
+          name: "Unavailable video",
+          type: "knowledge",
+          resource: { type: "external", url: "" },
+        },
       ],
     },
   ],
@@ -76,6 +82,8 @@ describe("RankCard", () => {
     expect(resourceLink.getAttribute("target")).toBe("_blank");
     expect(resourceLink.getAttribute("rel")).toContain("noreferrer");
     expect(screen.getByText("Inside block").closest("a")).toBeNull();
+    expect(screen.getByText("Foundations form 2").closest("a")).toBeNull();
+    expect(screen.getByText("Unavailable video").closest("a")).toBeNull();
     expect(screen.getAllByRole("link")).toHaveLength(1);
     expect(screen.getByText("Foundations form 2")).toBeDefined();
   });
