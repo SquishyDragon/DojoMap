@@ -9,12 +9,9 @@ export default function Home() {
   const { curriculum } = fortMyersKarate;
 
   return (
-    <main className={styles.main}>
+    <main className={styles.main} data-journey-scroll>
       <DojoIntro dojo={fortMyersKarate} />
-      <ProgressionNavigator
-        currentRankId={curriculum.ranks[0]?.id}
-        ranks={curriculum.ranks}
-      />
+      <ProgressionNavigator ranks={curriculum.ranks} />
 
       <div id="curriculum">
         <CurriculumMap curriculum={curriculum} />
