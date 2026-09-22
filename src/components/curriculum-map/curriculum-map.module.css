@@ -130,6 +130,17 @@
   text-transform: uppercase;
 }
 
+@media (max-width: 48rem) {
+  .rank,
+  .emptySection {
+    padding-bottom: 7rem;
+  }
+
+  .connector {
+    bottom: 5.5rem;
+  }
+}
+
 @media (max-height: 42rem) {
   .rank,
   .emptySection {

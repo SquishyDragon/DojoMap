@@ -98,6 +98,12 @@
   }
 }
 
+@media (max-width: 48rem) {
+  .intro {
+    padding-bottom: 7rem;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .arrow {
     transition: none;
