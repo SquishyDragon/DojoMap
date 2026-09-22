@@ -27,8 +27,10 @@ export function ProgressionNavigator({
               className={styles.rank}
               key={rank.id}
             >
-              <span aria-hidden="true" className={styles.marker} />
-              <span className={styles.label}>{rank.belt.name}</span>
+              <a className={styles.link} href={`#${rank.id}`}>
+                <span aria-hidden="true" className={styles.marker} />
+                <span className={styles.label}>{rank.belt.name}</span>
+              </a>
             </li>
           );
         })}

@@ -25,6 +25,15 @@ describe("ProgressionNavigator", () => {
       screen.getAllByRole("listitem").map(({ textContent }) => textContent),
     ).toEqual(["White", "Yellow", "Orange", "Green", "Blue"]);
     expect(
+      screen.getAllByRole("link").map((link) => link.getAttribute("href")),
+    ).toEqual([
+      "#white-belt",
+      "#yellow-belt",
+      "#orange-belt",
+      "#green-belt",
+      "#blue-belt",
+    ]);
+    expect(
       screen.getByText("Orange").closest("li")?.getAttribute("aria-current"),
     ).toBe(
       "step",
