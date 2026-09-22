@@ -39,7 +39,8 @@
   isolation: isolate;
   display: grid;
   width: 100%;
-  min-height: 100svh;
+  min-height: 100vh;
+  min-height: 100dvh;
   min-width: 0;
   align-items: center;
   padding: clamp(5.5rem, 11vw, 8rem) clamp(1rem, 6vw, 5rem);
@@ -75,7 +76,8 @@
   position: relative;
   isolation: isolate;
   display: grid;
-  min-height: 100svh;
+  min-height: 100vh;
+  min-height: 100dvh;
   align-items: center;
   padding: clamp(5.5rem, 11vw, 8rem) clamp(1rem, 6vw, 5rem);
   scroll-snap-align: start;
@@ -185,7 +187,8 @@
 .emptySection {
   position: relative;
   display: grid;
-  min-height: 100svh;
+  min-height: 100vh;
+  min-height: 100dvh;
   align-items: center;
   padding: clamp(5.5rem, 11vw, 8rem) clamp(1rem, 6vw, 5rem);
   scroll-snap-align: start;

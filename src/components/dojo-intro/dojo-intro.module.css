@@ -1,7 +1,8 @@
 .intro {
   display: grid;
   width: min(100%, 90rem);
-  min-height: 100svh;
+  min-height: 100vh;
+  min-height: 100dvh;
   align-content: space-between;
   justify-items: start;
   gap: 3rem;

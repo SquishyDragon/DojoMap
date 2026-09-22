@@ -1,7 +1,7 @@
 .main {
   display: grid;
-  height: 100svh;
-  min-height: 100vh;
+  height: 100vh;
+  height: 100dvh;
   align-content: start;
   width: 100%;
   min-width: 0;
