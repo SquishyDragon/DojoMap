@@ -56,4 +56,17 @@ describe("Home", () => {
 
     expect(scrollIntoView).toHaveBeenCalledWith({ block: "start" });
   });
+
+  it("leaves ordinary wheel scrolling to the native scroll container", () => {
+    const { container } = render(<Home />);
+    const scrollContainer = container.querySelector("main")!;
+    const wheelEvent = new WheelEvent("wheel", {
+      cancelable: true,
+      deltaY: 240,
+    });
+
+    scrollContainer.dispatchEvent(wheelEvent);
+
+    expect(wheelEvent.defaultPrevented).toBe(false);
+  });
 });

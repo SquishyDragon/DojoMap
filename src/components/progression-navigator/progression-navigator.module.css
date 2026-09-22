@@ -26,6 +26,7 @@
   font-weight: 800;
   letter-spacing: 0.08em;
   text-transform: uppercase;
+  transition: color 180ms ease;
 }
 
 .link {
@@ -61,6 +62,11 @@
   border: 2px solid #8f8a82;
   border-radius: 50%;
   background: #fff;
+  transition:
+    border-color 180ms ease,
+    background-color 180ms ease,
+    box-shadow 180ms ease,
+    transform 180ms ease;
 }
 
 .rank[aria-current="step"] {
@@ -71,6 +77,14 @@
   border-color: #8f3225;
   background: #8f3225;
   box-shadow: 0 0 0 0.25rem rgb(143 50 37 / 14%);
+  transform: scale(1.08);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rank,
+  .marker {
+    transition: none;
+  }
 }
 
 @media (max-width: 48rem) {
