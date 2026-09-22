@@ -1,5 +1,5 @@
 import { cleanup, fireEvent, render, screen } from "@testing-library/react";
-import { afterEach, describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 
 import Home from "./page";
 
@@ -44,5 +44,16 @@ describe("Home", () => {
     expect(
       screen.getByText("White").closest("li")?.getAttribute("aria-current"),
     ).toBe("step");
+  });
+
+  it("moves to the next journey section with the keyboard", () => {
+    render(<Home />);
+    const whiteBelt = document.getElementById("white-belt")!;
+    const scrollIntoView = vi.fn();
+
+    whiteBelt.scrollIntoView = scrollIntoView;
+    fireEvent.keyDown(window, { key: "ArrowDown" });
+
+    expect(scrollIntoView).toHaveBeenCalledWith({ block: "start" });
   });
 });
