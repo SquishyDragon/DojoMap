@@ -154,17 +154,24 @@ describe("CurriculumMap", () => {
     expect(getByText("Keep moving forward")).toBeDefined();
   });
 
-  it("renders an intentional state when the curriculum is missing", () => {
-    const { getByRole } = render(<CurriculumMap />);
+  it.each([undefined, null])(
+    "renders an intentional state when the curriculum is %s",
+    (curriculum) => {
+      const { getByRole, getByText, queryByRole } = render(
+        <CurriculumMap curriculum={curriculum} />,
+      );
 
-    expect(getByRole("status")).toBeDefined();
-    expect(
-      getByRole("heading", { level: 2, name: "Nothing to map yet" }),
-    ).toBeDefined();
-  });
+      expect(getByRole("status")).toBeDefined();
+      expect(
+        getByRole("heading", { level: 2, name: "Nothing to map yet" }),
+      ).toBeDefined();
+      expect(getByText("Curriculum data could not be loaded.")).toBeDefined();
+      expect(queryByRole("list")).toBeNull();
+    },
+  );
 
   it("renders an intentional state when the curriculum has no ranks", () => {
-    const { getByRole } = render(
+    const { getByRole, getByText, queryByRole } = render(
       <CurriculumMap curriculum={emptyCurriculum} />,
     );
 
@@ -172,5 +179,10 @@ describe("CurriculumMap", () => {
     expect(
       getByRole("heading", { level: 2, name: "No ranks yet" }),
     ).toBeDefined();
+    expect(
+      getByText("This curriculum does not have any ranks to display."),
+    ).toBeDefined();
+    expect(getByText("Empty Test")).toBeDefined();
+    expect(queryByRole("list")).toBeNull();
   });
 });
