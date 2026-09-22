@@ -93,25 +93,34 @@
     right: 50%;
     bottom: 0.75rem;
     width: min(calc(100% - 1.5rem), 32rem);
-    padding: 0.75rem 1rem;
+    padding: 0.5rem 0.625rem;
     overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
     transform: translateX(50%);
+  }
+
+  .navigator::-webkit-scrollbar {
+    display: none;
   }
 
   .ranks {
     display: flex;
+    width: 100%;
     min-width: max-content;
   }
 
   .rank {
-    min-width: 4.75rem;
+    min-width: 3.25rem;
     min-height: auto;
+    flex: 1 0 3.25rem;
   }
 
   .link {
-    min-height: auto;
+    min-height: 2.75rem;
     grid-template-columns: none;
     justify-items: center;
+    align-content: center;
     gap: 0.375rem;
   }
 
