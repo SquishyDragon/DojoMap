@@ -23,11 +23,13 @@ function hasAvailableExternalResource(
 }
 
 export function RankCard({ rank }: RankCardProps) {
+  const headingId = `${rank.id}-title`;
+
   return (
-    <article className={styles.card}>
+    <article aria-labelledby={headingId} className={styles.card}>
       <div className={styles.heading}>
         <p className={styles.position}>Rank {rank.order}</p>
-        <h2>{rank.name}</h2>
+        <h2 id={headingId}>{rank.name}</h2>
       </div>
 
       <div className={styles.belt}>

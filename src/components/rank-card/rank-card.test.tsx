@@ -62,6 +62,9 @@ describe("RankCard", () => {
     expect(
       screen.getByRole("heading", { level: 2, name: "Orange Belt" }),
     ).toBeDefined();
+    expect(
+      screen.getByRole("article", { name: "Orange Belt" }),
+    ).toBeDefined();
     expect(screen.getByText("Rank 3")).toBeDefined();
     expect(screen.getByText("Orange belt")).toBeDefined();
     expect(

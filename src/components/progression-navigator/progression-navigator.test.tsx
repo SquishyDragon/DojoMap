@@ -34,10 +34,13 @@ describe("ProgressionNavigator", () => {
       "#blue-belt",
     ]);
     expect(
-      screen.getByText("Orange").closest("li")?.getAttribute("aria-current"),
-    ).toBe(
-      "step",
-    );
+      screen
+        .getByRole("link", { name: "Orange" })
+        .getAttribute("aria-current"),
+    ).toBe("step");
+    expect(
+      screen.getByRole("link", { name: "Yellow" }).getAttribute("aria-current"),
+    ).toBeNull();
   });
 
   it("renders nothing when there are no ranks", () => {
@@ -45,5 +48,4 @@ describe("ProgressionNavigator", () => {
 
     expect(container.childElementCount).toBe(0);
   });
-
 });

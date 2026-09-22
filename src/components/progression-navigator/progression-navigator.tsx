@@ -22,12 +22,12 @@ export function ProgressionNavigator({
           const isCurrent = rank.id === currentRankId;
 
           return (
-            <li
-              aria-current={isCurrent ? "step" : undefined}
-              className={styles.rank}
-              key={rank.id}
-            >
-              <a className={styles.link} href={`#${rank.id}`}>
+            <li className={styles.rank} key={rank.id}>
+              <a
+                aria-current={isCurrent ? "step" : undefined}
+                className={styles.link}
+                href={`#${rank.id}`}
+              >
                 <span aria-hidden="true" className={styles.marker} />
                 <span className={styles.label}>{rank.belt.name}</span>
               </a>

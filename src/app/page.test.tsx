@@ -42,7 +42,9 @@ describe("Home", () => {
     fireEvent.scroll(scrollContainer);
 
     expect(
-      screen.getByText("White").closest("li")?.getAttribute("aria-current"),
+      screen
+        .getByRole("link", { name: "White" })
+        .getAttribute("aria-current"),
     ).toBe("step");
   });
 
