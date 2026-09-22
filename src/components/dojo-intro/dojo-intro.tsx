@@ -8,7 +8,7 @@ type DojoIntroProps = {
 
 export function DojoIntro({ dojo }: DojoIntroProps) {
   return (
-    <header className={styles.intro} id="dojo">
+    <header className={styles.intro} data-journey-section id="dojo">
       <p className={styles.brand}>DojoMap</p>
 
       <div className={styles.identity}>

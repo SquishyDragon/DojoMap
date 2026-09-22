@@ -1,7 +1,9 @@
-import { render, screen } from "@testing-library/react";
-import { describe, expect, it } from "vitest";
+import { cleanup, fireEvent, render, screen } from "@testing-library/react";
+import { afterEach, describe, expect, it } from "vitest";
 
 import Home from "./page";
+
+afterEach(cleanup);
 
 describe("Home", () => {
   it("renders the dojo opening before its curriculum", () => {
@@ -15,5 +17,32 @@ describe("Home", () => {
         name: "Foundations Karate rank progression",
       }),
     ).toBeDefined();
+  });
+
+  it("updates the progression marker to the centered rank on scroll", () => {
+    const { container } = render(<Home />);
+    const scrollContainer = container.querySelector("main")!;
+    const positions = new Map([
+      ["dojo", -800],
+      ["white-belt", 0],
+      ["yellow-belt", 800],
+      ["orange-belt", 1600],
+      ["green-belt", 2400],
+      ["blue-belt", 3200],
+    ]);
+
+    Object.defineProperty(scrollContainer, "clientHeight", { value: 800 });
+    scrollContainer.getBoundingClientRect = () =>
+      ({ height: 800, top: 0 }) as DOMRect;
+    positions.forEach((_, id) => {
+      document.getElementById(id)!.getBoundingClientRect = () =>
+        ({ height: 800, top: positions.get(id)! }) as DOMRect;
+    });
+
+    fireEvent.scroll(scrollContainer);
+
+    expect(
+      screen.getByText("White").closest("li")?.getAttribute("aria-current"),
+    ).toBe("step");
   });
 });

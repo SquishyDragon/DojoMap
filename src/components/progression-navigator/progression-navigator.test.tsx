@@ -1,5 +1,5 @@
-import { act, cleanup, render, screen } from "@testing-library/react";
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { cleanup, render, screen } from "@testing-library/react";
+import { afterEach, describe, expect, it } from "vitest";
 
 import { karateCurriculum } from "@/data/karate-curriculum";
 
@@ -7,7 +7,6 @@ import { ProgressionNavigator } from "./progression-navigator";
 
 afterEach(() => {
   cleanup();
-  vi.unstubAllGlobals();
 });
 
 describe("ProgressionNavigator", () => {
@@ -38,50 +37,4 @@ describe("ProgressionNavigator", () => {
     expect(container.childElementCount).toBe(0);
   });
 
-  it("updates the current rank when a section enters the viewport center", () => {
-    let notifyIntersection:
-      | IntersectionObserverCallback
-      | undefined;
-
-    class MockIntersectionObserver {
-      constructor(callback: IntersectionObserverCallback) {
-        notifyIntersection = callback;
-      }
-
-      disconnect = vi.fn();
-      observe = vi.fn();
-    }
-
-    vi.stubGlobal("IntersectionObserver", MockIntersectionObserver);
-
-    render(
-      <main data-journey-scroll>
-        <section id="dojo" />
-        {karateCurriculum.ranks.map((rank) => (
-          <section id={rank.id} key={rank.id} />
-        ))}
-        <ProgressionNavigator ranks={karateCurriculum.ranks} />
-      </main>,
-    );
-
-    act(() => {
-      notifyIntersection?.(
-        [
-          {
-            intersectionRatio: 0.1,
-            isIntersecting: true,
-            target: document.getElementById("orange-belt")!,
-          } as unknown as IntersectionObserverEntry,
-        ],
-        {} as IntersectionObserver,
-      );
-    });
-
-    expect(
-      screen.getByText("Orange").closest("li")?.getAttribute("aria-current"),
-    ).toBe("step");
-    expect(
-      screen.getByText("White").closest("li")?.hasAttribute("aria-current"),
-    ).toBe(false);
-  });
 });

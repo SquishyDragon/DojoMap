@@ -43,6 +43,8 @@ export function CurriculumMap({ curriculum }: CurriculumMapProps) {
           {curriculum.ranks.map((rank, index) => (
             <li
               className={styles.rank}
+              data-journey-section
+              data-rank-id={rank.id}
               id={rank.id}
               key={rank.id}
               style={{ "--belt-color": rank.belt.color } as CSSProperties}
