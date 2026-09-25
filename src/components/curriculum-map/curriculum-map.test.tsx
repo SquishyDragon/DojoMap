@@ -1,7 +1,7 @@
 import { cleanup, render, within } from "@testing-library/react";
 import { afterEach, describe, expect, it } from "vitest";
 
-import type { Curriculum, Rank } from "@/domain/curriculum";
+import type { Curriculum, Rank, Technique } from "@/domain/curriculum";
 
 import { CurriculumMap } from "./curriculum-map";
 
@@ -17,6 +17,15 @@ function makeRank(id: string, name: string, order: number): Rank {
       color: "#cccccc",
     },
     requirements: [],
+  };
+}
+
+function makeTechnique(id: string, name: string): Technique {
+  return {
+    id,
+    name,
+    description: `${name} description`,
+    resources: [],
   };
 }
 
@@ -62,8 +71,14 @@ const variableCurriculum = {
           id: "yellow-belt-techniques",
           category: "Techniques",
           items: [
-            { id: "front-kick", name: "Front kick", type: "technique" },
-            { id: "high-block", name: "High block", type: "technique" },
+            {
+              type: "technique",
+              technique: makeTechnique("front-kick", "Front kick"),
+            },
+            {
+              type: "technique",
+              technique: makeTechnique("high-block", "High block"),
+            },
           ],
         },
         {

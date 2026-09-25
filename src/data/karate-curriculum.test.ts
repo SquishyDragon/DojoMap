@@ -21,7 +21,7 @@ describe("karateCurriculum", () => {
     }
   });
 
-  it("can identify a future internal content destination", () => {
+  it("references reusable technique detail without copying rank context", () => {
     const orangeBelt = karateCurriculum.ranks.find(
       (rank) => rank.id === "orange-belt",
     );
@@ -29,12 +29,18 @@ describe("karateCurriculum", () => {
       (requirement) => requirement.id === "orange-belt-basics",
     );
     const roundhouseKick = basics?.items.find(
-      (item) => item.id === "roundhouse-kick",
+      (item) =>
+        item.type === "technique" &&
+        item.technique.id === "roundhouse-kick",
     );
 
-    expect(roundhouseKick?.resource).toEqual({
-      type: "internal",
-      slug: "roundhouse-kick",
-    });
+    expect(roundhouseKick?.type).toBe("technique");
+    if (roundhouseKick?.type !== "technique") {
+      throw new Error("Expected a technique reference");
+    }
+
+    expect(roundhouseKick.technique.name).toBe("Roundhouse kick");
+    expect(roundhouseKick.technique.description.length).toBeGreaterThan(0);
+    expect("rank" in roundhouseKick.technique).toBe(false);
   });
 });

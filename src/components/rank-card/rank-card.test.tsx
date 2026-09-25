@@ -19,15 +19,22 @@ const orangeBelt = {
       category: "Basics",
       items: [
         {
-          id: "inside-block",
-          name: "Inside block",
           type: "technique",
-          resource: { type: "internal", slug: "inside-block" },
+          technique: {
+            id: "inside-block",
+            name: "Inside block",
+            description: "A defensive movement across the body.",
+            resources: [],
+          },
         },
         {
-          id: "roundhouse-kick",
-          name: "Roundhouse kick",
           type: "technique",
+          technique: {
+            id: "roundhouse-kick",
+            name: "Roundhouse kick",
+            description: "A kick delivered along a curved path.",
+            resources: [],
+          },
           resource: {
             type: "external",
             url: "https://example.com/roundhouse-kick",

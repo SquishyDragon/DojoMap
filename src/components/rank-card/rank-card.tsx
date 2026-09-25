@@ -1,4 +1,8 @@
-import type { Rank } from "@/domain/curriculum";
+import {
+  getCurriculumItemId,
+  getCurriculumItemName,
+  type Rank,
+} from "@/domain/curriculum";
 
 import styles from "./rank-card.module.css";
 
@@ -48,6 +52,8 @@ export function RankCard({ rank }: RankCardProps) {
             <h3>{requirement.category}</h3>
             <ul className={styles.items}>
               {requirement.items.map((item) => {
+                const itemId = getCurriculumItemId(item);
+                const itemName = getCurriculumItemName(item);
                 const hasDestination = hasAvailableExternalResource(
                   item.resource,
                 );
@@ -55,17 +61,17 @@ export function RankCard({ rank }: RankCardProps) {
                 return (
                   <li
                     className={hasDestination ? styles.resourceItem : undefined}
-                    key={item.id}
+                    key={itemId}
                   >
                     {hasDestination && item.resource?.type === "external" ? (
                       <a
-                        aria-label={`${item.name} (opens in new tab)`}
+                        aria-label={`${itemName} (opens in new tab)`}
                         className={styles.resourceLink}
                         href={item.resource.url}
                         rel="noopener noreferrer"
                         target="_blank"
                       >
-                        <span>{item.name}</span>
+                        <span>{itemName}</span>
                         <span
                           aria-hidden="true"
                           className={styles.resourceIcon}
@@ -74,7 +80,7 @@ export function RankCard({ rank }: RankCardProps) {
                         </span>
                       </a>
                     ) : (
-                      <span>{item.name}</span>
+                      <span>{itemName}</span>
                     )}
                   </li>
                 );
