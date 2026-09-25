@@ -4,22 +4,58 @@ DojoMap is a guided curriculum map for martial arts students. It turns a dojo's 
 
 [View the live app](https://dojomap.ninja/)
 
-## v0.3.0 experience
+## v0.4.0 experience
 
-DojoMap v0.3.0 keeps the curriculum journey from v0.2.0 and adds focused technique details. The experience:
+DojoMap v0.4.0 turns the former single-dojo application into a small discovery platform while preserving the complete v0.3.0 curriculum experience. The release:
 
-- opens with the student's dojo identity and an invitation to begin;
+- gives DojoMap its own landing page and identity at `/`;
+- lets visitors search the static directory by dojo name, location, or discipline;
+- provides a browsable dojo directory at `/dojos`;
+- introduces the product to school owners at `/for-dojos` without pretending onboarding is available;
+- resolves each mapped school through its canonical slug-based route;
+- moves Fort Myers Karate to `/fort-myers-karate` without changing its rank journey, technique details, resources, keyboard behavior, or snap scrolling; and
+- provides an intentional recovery path for unknown dojo addresses.
+
+The directory currently contains one dojo, Fort Myers Karate. Its curriculum remains illustrative sample data, not an official or universal karate syllabus.
+
+## Routes
+
+| Route | Purpose |
+| --- | --- |
+| `/` | DojoMap landing page and dojo search |
+| `/dojos` | Directory of every mapped dojo |
+| `/for-dojos` | Product overview and current onboarding status for dojo owners |
+| `/fort-myers-karate` | Fort Myers Karate curriculum journey |
+| `/[dojoSlug]` | Static route pattern used for directory-backed dojo pages |
+
+Unknown dojo slugs use the branded not-found experience and return visitors to the directory or landing page. Because production is a static export, supported dojo routes are generated from the directory during the build and arbitrary slugs are not rendered dynamically.
+
+## Directory and search architecture
+
+`src/data/dojo-directory.ts` is the source of truth for discoverable schools. Each entry pairs a stable URL slug with a complete `Dojo` record. The same directory drives:
+
+- landing-page search records;
+- the `/dojos` discovery cards;
+- static route generation; and
+- slug resolution for dojo pages.
+
+Search runs locally in the browser against a small derived record containing the dojo name, city and state, discipline, description, and canonical slug. Matching is case-insensitive and supports partial name, location, or discipline queries. Submitting the search opens the first matching canonical dojo route; an unmatched query offers a path to the complete directory.
+
+Adding a future dojo requires a new validated `Dojo` dataset and one directory entry. The landing search, directory, and generated route then consume the same data without duplicating display or routing information.
+
+## Fort Myers Karate journey
+
+The v0.3.0 experience now lives behind `/fort-myers-karate`. It:
+
+- opens with the dojo identity and an invitation to begin;
 - presents every rank as a full-screen, vertically snapping section;
-- keeps the complete belt path visible in a synchronized progression navigator;
+- keeps the belt path visible in a synchronized progression navigator;
 - supports direct belt links and Arrow/Page Up and Down keyboard navigation;
 - displays categorized curriculum requirements for every rank;
-- lets students select eligible techniques without leaving the curriculum or losing their place;
-- shows each selected technique's description, belt context, and available learning resources;
-- preserves curriculum items that open external resources as links and leaves unavailable items as normal text;
-- concludes the current curriculum map intentionally; and
-- remains usable on phone and desktop widths, with reduced-motion support and intentional empty/error states.
-
-The included curriculum is illustrative sample data, not an official or universal karate syllabus.
+- lets students inspect eligible techniques without leaving the curriculum or losing their place;
+- preserves external curriculum links and non-interactive unavailable items;
+- concludes the currently mapped curriculum intentionally; and
+- remains usable on phone and desktop widths with reduced-motion support.
 
 ## Data-model evolution
 
@@ -94,27 +130,28 @@ npm test
 npm run build
 ```
 
-The test suite covers dojo identity, curriculum models and data, rank ordering and rendering, synchronized navigation, keyboard behavior, technique selection and lifecycle, every supported resource case, external-link regressions, the final journey state, and empty/error-safe rendering.
+The test suite covers directory integrity, search matching and navigation, canonical slug generation and resolution, unknown-route handling, discovery rendering, accessibility landmarks, dojo identity, curriculum models and data, rank ordering, synchronized navigation, keyboard behavior, technique selection and lifecycle, every supported resource case, external-link regressions, and empty/error-safe rendering.
 
 ## Project structure
 
 ```text
-src/app/          Page, metadata, and global styles
-src/components/   Dojo, curriculum, rank, navigation, and technique-detail UI
-src/data/         Dojo and sample curriculum data
-src/domain/       TypeScript domain models
+src/app/          Landing, directory, owner, dojo, not-found, and metadata routes
+src/components/   Search, discovery, curriculum, navigation, and technique UI
+src/data/         Directory entries, dojo records, and sample curriculum data
+src/domain/       TypeScript domain models and directory utilities
 ```
 
 The production build is configured as a static export in `next.config.ts`; generated files are written to `out/`.
 
-## v0.3.0 scope boundary
+## v0.4.0 scope boundary
 
-Version 0.3.0 adds in-context details for curriculum techniques only. It does **not** include a technique library, technique routes or deep links, form or knowledge details, embedded media, search, accounts, progress tracking, authentication, a database, admin or editing tools, multiple selectable dojos, AI-generated instruction, or an attempt to map every lesson and black-belt degree.
+Version 0.4.0 adds public discovery and canonical dojo routes. It does **not** include owner applications, dojo submission or editing, accounts, progress tracking, authentication, a database, location-aware search, map or distance features, a technique library, standalone technique routes, embedded media, admin tools, AI-generated instruction, or an attempt to map every lesson and black-belt degree.
 
-The current curriculum remains a useful map, not a claim that a martial artist's entire journey has been captured. The project will be used in its current form before the scope of v0.4.0 is decided.
+The directory is intentionally static and contains only Fort Myers Karate in this release. The owner page communicates the future direction without exposing a nonfunctional form or signup flow. The project will be used in its deployed form before the next scope is chosen.
 
 ## Release documentation
 
+- [v0.4.0 work items and acceptance criteria](./V0.4.0.md)
 - [v0.3.0 work items and acceptance criteria](./V0.3.0.md)
 - [technique-detail product contract](./docs/technique-detail-contract.md)
 - [v0.2.0 work items and acceptance criteria](./V0.2.0.md)
