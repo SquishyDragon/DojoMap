@@ -44,7 +44,7 @@ export function TechniqueSelectionProvider({
   );
   const clearTechnique = useCallback(() => {
     setSelection(null);
-    returnFocusTarget.current?.focus();
+    returnFocusTarget.current?.focus({ preventScroll: true });
     returnFocusTarget.current = null;
   }, []);
   const value = useMemo(

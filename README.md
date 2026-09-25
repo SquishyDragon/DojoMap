@@ -51,7 +51,7 @@ Rank context is derived from the curriculum occurrence rather than copied into t
 
 ## Technique behavior and resources
 
-Selecting an eligible technique opens an in-context detail panel. The curriculum page owns the single selected-technique state as a pair of stable technique and rank IDs; the panel resolves current data from that selection and does not keep competing selection state. Closing the panel preserves the current rank and scroll position, then restores focus to the control that opened it when possible.
+Selecting an eligible technique opens an in-context detail panel. The curriculum page owns the single selected-technique state as a pair of stable technique and rank IDs; the panel resolves current data from that selection and does not keep competing selection state. Closing the panel preserves the current rank and scroll position, then restores focus to the control that opened it without automatically scrolling that control back into view.
 
 Resource behavior is intentionally small and explicit:
 

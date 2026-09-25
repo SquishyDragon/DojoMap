@@ -1,5 +1,5 @@
 import { cleanup, fireEvent, render, screen } from "@testing-library/react";
-import { afterEach, describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 
 import {
   TechniqueSelectionProvider,
@@ -22,11 +22,14 @@ function SelectionHarness() {
           : "No technique selected"}
       </output>
       <button
-        onClick={() =>
-          selectTechnique({
-            techniqueId: "front-kick",
-            rankId: "white-belt",
-          })
+        onClick={(event) =>
+          selectTechnique(
+            {
+              techniqueId: "front-kick",
+              rankId: "white-belt",
+            },
+            event.currentTarget,
+          )
         }
       >
         Select front kick
@@ -66,5 +69,21 @@ describe("TechniqueSelectionProvider", () => {
 
     fireEvent.click(screen.getByRole("button", { name: "Clear selection" }));
     expect(screen.getByText("No technique selected")).toBeDefined();
+  });
+
+  it("restores focus without scrolling the curriculum", () => {
+    render(
+      <TechniqueSelectionProvider>
+        <SelectionHarness />
+      </TechniqueSelectionProvider>,
+    );
+
+    const trigger = screen.getByRole("button", { name: "Select front kick" });
+    const focusSpy = vi.spyOn(trigger, "focus");
+
+    fireEvent.click(trigger);
+    fireEvent.click(screen.getByRole("button", { name: "Clear selection" }));
+
+    expect(focusSpy).toHaveBeenCalledWith({ preventScroll: true });
   });
 });
