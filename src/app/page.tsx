@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 import styles from "./page.module.css";
 
 export default function HomePage() {
@@ -6,7 +8,16 @@ export default function HomePage() {
       <div className={styles.image} aria-hidden="true" />
       <div className={styles.scrim} aria-hidden="true" />
 
-      <p className={styles.brand}>DojoMap</p>
+      <header className={styles.header}>
+        <Link className={styles.brand} href="/" aria-label="DojoMap home">
+          DojoMap
+        </Link>
+        <nav aria-label="Primary navigation" className={styles.navigation}>
+          <a href="#dojo-search">Search Dojo</a>
+          <Link href="/dojos">Explore Dojos</Link>
+          <Link href="/for-dojos">I Own a Dojo</Link>
+        </nav>
+      </header>
 
       <section className={styles.hero} aria-labelledby="hero-title">
         <p className={styles.eyebrow}>Discipline lives here</p>

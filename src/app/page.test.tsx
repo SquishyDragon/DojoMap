@@ -23,6 +23,18 @@ describe("HomePage", () => {
       }),
     ).toBeDefined();
     expect(screen.getByText("DojoMap")).toBeDefined();
+    const navigation = screen.getByRole("navigation", {
+      name: "Primary navigation",
+    });
+    expect(
+      within(navigation)
+        .getAllByRole("link")
+        .map((link) => [link.textContent, link.getAttribute("href")]),
+    ).toEqual([
+      ["Search Dojo", "#dojo-search"],
+      ["Explore Dojos", "/dojos"],
+      ["I Own a Dojo", "/for-dojos"],
+    ]);
     expect(
       screen.getByRole("search").querySelector('input[type="search"]'),
     ).not.toBeNull();
