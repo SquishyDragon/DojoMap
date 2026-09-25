@@ -43,7 +43,7 @@ describe("DojoSearch", () => {
 
     const results = screen.getByRole("list", { name: "Dojo search results" });
     const link = within(results).getByRole("link", {
-      name: /Fort Myers Karate.*Fort Myers, Florida.*Karate/i,
+      name: /Fort Myers Karate.*Fort Myers, Florida.*View curriculum/i,
     });
 
     expect(link.getAttribute("href")).toBe("/fort-myers-karate");

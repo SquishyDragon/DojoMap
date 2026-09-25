@@ -1,6 +1,8 @@
 import Link from "next/link";
 
+import { DojoDiscoveryCard } from "@/components/dojo-discovery-card/dojo-discovery-card";
 import { dojoDirectory } from "@/data/dojo-directory";
+import { toDojoSearchRecord } from "@/domain/dojo-directory";
 
 import styles from "./page.module.css";
 
@@ -35,23 +37,12 @@ export default function DojosPage() {
       </section>
 
       <section className={styles.directory} aria-label="Available dojos">
-        {dojoDirectory.map(({ slug, dojo }, index) => (
-          <article className={styles.dojo} key={dojo.id}>
-            <div className={styles.number} aria-hidden="true">
-              {String(index + 1).padStart(2, "0")}
-            </div>
-            <div className={styles.identity}>
-              <p>{dojo.curriculum.discipline}</p>
-              <h2>{dojo.name}</h2>
-              <span>
-                {dojo.location.city}, {dojo.location.state}
-              </span>
-            </div>
-            <p className={styles.summary}>{dojo.description}</p>
-            <Link className={styles.action} href={`/${slug}`}>
-              View curriculum <span aria-hidden="true">→</span>
-            </Link>
-          </article>
+        {dojoDirectory.map((entry, index) => (
+          <DojoDiscoveryCard
+            dojo={toDojoSearchRecord(entry)}
+            index={index}
+            key={entry.dojo.id}
+          />
         ))}
       </section>
     </main>

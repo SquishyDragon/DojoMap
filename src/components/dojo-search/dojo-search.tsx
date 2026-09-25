@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
 import type { FormEvent } from "react";
 
+import { DojoDiscoveryCard } from "@/components/dojo-discovery-card/dojo-discovery-card";
 import {
   searchDojos,
   type DojoSearchRecord,
@@ -59,15 +60,7 @@ export function DojoSearch({
             <ul aria-label="Dojo search results">
               {results.map((result) => (
                 <li key={result.slug}>
-                  <Link href={`/${result.slug}`}>
-                    <span>
-                      <strong>{result.name}</strong>
-                      <small>
-                        {result.location} · {result.discipline}
-                      </small>
-                    </span>
-                    <span aria-hidden="true">View dojo →</span>
-                  </Link>
+                  <DojoDiscoveryCard dojo={result} variant="compact" />
                 </li>
               ))}
             </ul>

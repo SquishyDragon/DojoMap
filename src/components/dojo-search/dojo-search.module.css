@@ -107,45 +107,8 @@
   list-style: none;
 }
 
-.results a {
-  color: inherit;
-}
-
-.results li > a {
-  display: flex;
-  gap: 1rem;
-  align-items: center;
-  justify-content: space-between;
-  padding: 1rem 1.25rem;
-  text-decoration: none;
-}
-
-.results li > a:hover,
-.results li > a:focus-visible {
-  background: #e8e7e2;
-  outline: none;
-}
-
-.results li span:first-child {
-  display: grid;
-  gap: 0.2rem;
-}
-
-.results strong {
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: 1.1rem;
-}
-
-.results small {
-  color: #5c6060;
-  font-size: 0.8125rem;
-}
-
-.results li span:last-child {
-  flex: none;
-  color: #9d1d19;
-  font-size: 0.8125rem;
-  font-weight: 700;
+.results li + li {
+  border-top: 1px solid #d1d2ce;
 }
 
 .results > p {
