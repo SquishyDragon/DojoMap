@@ -242,4 +242,38 @@ describe("Home", () => {
 
     expect(scrollIntoView).not.toHaveBeenCalled();
   });
+
+  it("shows the corresponding curriculum data when techniques are switched", () => {
+    render(<Home />);
+    const insideBlock = screen.getByRole("button", { name: "Inside block" });
+    const outsideBlock = screen.getByRole("button", {
+      name: "Outside block",
+    });
+
+    fireEvent.click(insideBlock);
+
+    expect(
+      screen.getByRole("complementary", { name: "Inside block" }),
+    ).toBeDefined();
+    expect(
+      screen.getByText(
+        "A defensive motion that travels across the body to redirect an incoming attack.",
+      ),
+    ).toBeDefined();
+    expect(insideBlock.getAttribute("aria-expanded")).toBe("true");
+
+    fireEvent.click(outsideBlock);
+
+    expect(screen.queryByText("Inside block", { selector: "h2" })).toBeNull();
+    expect(
+      screen.getByRole("complementary", { name: "Outside block" }),
+    ).toBeDefined();
+    expect(
+      screen.getByText(
+        "A defensive motion that redirects an attack away from the body's center line.",
+      ),
+    ).toBeDefined();
+    expect(insideBlock.getAttribute("aria-expanded")).toBe("false");
+    expect(outsideBlock.getAttribute("aria-expanded")).toBe("true");
+  });
 });
