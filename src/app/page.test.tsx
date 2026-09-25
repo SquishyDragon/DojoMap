@@ -276,4 +276,49 @@ describe("Home", () => {
     expect(insideBlock.getAttribute("aria-expanded")).toBe("false");
     expect(outsideBlock.getAttribute("aria-expanded")).toBe("true");
   });
+
+  it("keeps repeated detail interactions free of stale lifecycle state", () => {
+    render(<Home />);
+    const insideBlock = screen.getByRole("button", { name: "Inside block" });
+    const outsideBlock = screen.getByRole("button", {
+      name: "Outside block",
+    });
+
+    fireEvent.click(insideBlock);
+    expect(screen.getAllByRole("complementary")).toHaveLength(1);
+
+    fireEvent.click(outsideBlock);
+    expect(screen.getAllByRole("complementary")).toHaveLength(1);
+    expect(
+      screen.getByRole("complementary", { name: "Outside block" }),
+    ).toBeDefined();
+    expect(
+      screen.queryByText(
+        "A defensive motion that travels across the body to redirect an incoming attack.",
+      ),
+    ).toBeNull();
+
+    fireEvent.keyDown(window, { key: "Escape" });
+    expect(screen.queryByRole("complementary")).toBeNull();
+    expect(document.activeElement).toBe(outsideBlock);
+
+    fireEvent.click(insideBlock);
+    expect(screen.getAllByRole("complementary")).toHaveLength(1);
+    expect(
+      screen.getByRole("complementary", { name: "Inside block" }),
+    ).toBeDefined();
+    expect(
+      screen.queryByText(
+        "A defensive motion that redirects an attack away from the body's center line.",
+      ),
+    ).toBeNull();
+
+    fireEvent.click(
+      screen.getByRole("button", { name: "Close technique details" }),
+    );
+    expect(screen.queryByRole("complementary")).toBeNull();
+    expect(document.activeElement).toBe(insideBlock);
+    expect(insideBlock.getAttribute("aria-expanded")).toBe("false");
+    expect(outsideBlock.getAttribute("aria-expanded")).toBe("false");
+  });
 });
