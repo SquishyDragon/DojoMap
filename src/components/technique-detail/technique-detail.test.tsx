@@ -341,7 +341,7 @@ describe("TechniqueDetail", () => {
     expect(screen.queryByText(/^\s+$/)).toBeNull();
   });
 
-  it("renders multiple resources once each in dataset order", () => {
+  it("renders every supported resource without loss and in dataset order", () => {
     function MultipleResourcesHarness() {
       const { selectTechnique } = useTechniqueSelection();
 
@@ -378,6 +378,7 @@ describe("TechniqueDetail", () => {
       .nextElementSibling as HTMLElement;
     const resourceRows = within(resourceList).getAllByRole("listitem");
 
+    expect(resourceRows).toHaveLength(4);
     expect(resourceRows.map(({ textContent }) => textContent)).toEqual([
       "VideoWatch the demonstration↗",
       "ArticleRead the technique guide↗",
@@ -393,6 +394,12 @@ describe("TechniqueDetail", () => {
       "https://example.com/article",
       "https://example.com/follow-up-video",
     ]);
+    expect(
+      within(resourceList)
+        .getByText("Keep your shoulders relaxed throughout the movement.")
+        .closest("a"),
+    ).toBeNull();
+    expect(within(resourceList).queryByText("Invalid demonstration")).toBeNull();
   });
 
   it("renders nothing when the selected occurrence cannot be resolved", () => {
