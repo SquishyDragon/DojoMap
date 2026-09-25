@@ -136,18 +136,36 @@ describe("Home", () => {
     const techniqueButton = screen.getByRole("button", {
       name: "Inside block",
     });
+    const otherTechniqueButton = screen.getByRole("button", {
+      name: "Outside block",
+    });
 
     scrollContainer.scrollTop = 1200;
+    expect(techniqueButton.getAttribute("aria-expanded")).toBe("false");
+    expect(techniqueButton.getAttribute("aria-controls")).toBe(
+      "technique-detail-panel",
+    );
 
     fireEvent.click(techniqueButton);
 
+    const detail = screen.getByRole("complementary", { name: "Inside block" });
+    const detailHeading = screen.getByRole("heading", {
+      level: 2,
+      name: "Inside block",
+    });
+    const detailDescription = screen.getByText(
+      "A defensive motion that travels across the body to redirect an incoming attack.",
+    );
+
+    expect(detail.id).toBe("technique-detail-panel");
+    expect(detail.getAttribute("aria-labelledby")).toBe(detailHeading.id);
+    expect(detail.getAttribute("aria-describedby")).toBe(
+      detailDescription.id,
+    );
+    expect(techniqueButton.getAttribute("aria-expanded")).toBe("true");
+    expect(otherTechniqueButton.getAttribute("aria-expanded")).toBe("false");
     expect(
-      screen.getByRole("complementary", { name: "Inside block" }),
-    ).toBeDefined();
-    expect(
-      screen.getByText(
-        "A defensive motion that travels across the body to redirect an incoming attack.",
-      ),
+      detailDescription,
     ).toBeDefined();
     expect(
       screen.getByRole("complementary", { name: "Inside block" }).textContent,
@@ -158,6 +176,7 @@ describe("Home", () => {
     );
 
     expect(screen.queryByRole("complementary")).toBeNull();
+    expect(techniqueButton.getAttribute("aria-expanded")).toBe("false");
     expect(document.activeElement).toBe(techniqueButton);
     expect(scrollContainer.scrollTop).toBe(1200);
   });

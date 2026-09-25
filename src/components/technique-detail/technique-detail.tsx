@@ -108,12 +108,15 @@ export function TechniqueDetail({ curriculum }: TechniqueDetailProps) {
 
   const { technique } = context.item;
   const headingId = `technique-detail-${technique.id}`;
+  const descriptionId = `technique-detail-${technique.id}-description`;
 
   return (
     <aside
+      aria-describedby={descriptionId}
       aria-labelledby={headingId}
       className={styles.detail}
       data-technique-detail
+      id="technique-detail-panel"
       style={{ "--belt-color": context.rank.belt.color } as CSSProperties}
     >
       <button
@@ -131,7 +134,9 @@ export function TechniqueDetail({ curriculum }: TechniqueDetailProps) {
         <span aria-hidden="true" className={styles.beltColor} />
         <span>{context.rank.name}</span>
       </div>
-      <p className={styles.description}>{technique.description}</p>
+      <p className={styles.description} id={descriptionId}>
+        {technique.description}
+      </p>
       <TechniqueResources resources={technique.resources} />
     </aside>
   );

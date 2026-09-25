@@ -29,7 +29,7 @@ function hasAvailableExternalResource(
 
 export function RankCard({ rank }: RankCardProps) {
   const headingId = `${rank.id}-title`;
-  const { selectTechnique } = useTechniqueSelection();
+  const { selection, selectTechnique } = useTechniqueSelection();
 
   return (
     <article aria-labelledby={headingId} className={styles.card}>
@@ -61,6 +61,10 @@ export function RankCard({ rank }: RankCardProps) {
                 );
                 const canSelectTechnique =
                   item.type === "technique" && !hasDestination;
+                const isSelected =
+                  canSelectTechnique &&
+                  selection?.techniqueId === itemId &&
+                  selection.rankId === rank.id;
 
                 return (
                   <li
@@ -89,6 +93,8 @@ export function RankCard({ rank }: RankCardProps) {
                       </a>
                     ) : canSelectTechnique && item.type === "technique" ? (
                       <button
+                        aria-controls="technique-detail-panel"
+                        aria-expanded={isSelected}
                         className={styles.techniqueButton}
                         onClick={(event) =>
                           selectTechnique(
