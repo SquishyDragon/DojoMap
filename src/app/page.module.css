@@ -3,10 +3,11 @@
   position: relative;
   isolation: isolate;
   display: grid;
-  min-height: 100vh;
-  min-height: 100dvh;
+  height: 100vh;
+  height: 100dvh;
   grid-template-rows: auto 1fr auto;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
   padding: clamp(1.5rem, 4vw, 3rem) var(--hero-pad);
   color: #f6f4ef;
   background: #050707;
@@ -157,7 +158,7 @@
 
 @media (max-width: 760px) {
   .main {
-    min-height: 100svh;
+    height: 100svh;
     padding: 1.5rem;
   }
 
@@ -212,10 +213,6 @@
 }
 
 @media (max-height: 700px) {
-  .main {
-    overflow-y: auto;
-  }
-
   .hero {
     padding-block: 2rem;
   }
