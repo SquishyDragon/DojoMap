@@ -25,7 +25,18 @@ function DetailHarness() {
         }
         type="button"
       >
-        Select technique
+        Select inside block
+      </button>
+      <button
+        onClick={() =>
+          selectTechnique({
+            techniqueId: "ready-stance",
+            rankId: "white-belt",
+          })
+        }
+        type="button"
+      >
+        Select ready stance
       </button>
       <TechniqueDetail curriculum={karateCurriculum} />
     </>
@@ -42,7 +53,9 @@ describe("TechniqueDetail", () => {
 
     expect(screen.queryByText("Technique detail")).toBeNull();
 
-    fireEvent.click(screen.getByRole("button", { name: "Select technique" }));
+    fireEvent.click(
+      screen.getByRole("button", { name: "Select inside block" }),
+    );
 
     expect(
       screen.getByRole("complementary", { name: "Inside block" }),
@@ -61,6 +74,41 @@ describe("TechniqueDetail", () => {
         .getByRole("complementary", { name: "Inside block" })
         .getAttribute("style"),
     ).toContain("--belt-color: #ea7c2b");
+  });
+
+  it("reuses the same view when selection changes to another technique", () => {
+    render(
+      <TechniqueSelectionProvider>
+        <DetailHarness />
+      </TechniqueSelectionProvider>,
+    );
+
+    fireEvent.click(
+      screen.getByRole("button", { name: "Select inside block" }),
+    );
+    expect(
+      screen.getByRole("complementary", { name: "Inside block" }),
+    ).toBeDefined();
+
+    fireEvent.click(
+      screen.getByRole("button", { name: "Select ready stance" }),
+    );
+
+    expect(screen.queryByText("Inside block")).toBeNull();
+    expect(
+      screen.getByRole("complementary", { name: "Ready stance" }),
+    ).toBeDefined();
+    expect(
+      screen.getByText(
+        "A balanced starting position used to prepare the body and attention for movement.",
+      ),
+    ).toBeDefined();
+    expect(screen.getByText("White Belt")).toBeDefined();
+    expect(
+      screen
+        .getByRole("complementary", { name: "Ready stance" })
+        .getAttribute("style"),
+    ).toContain("--belt-color: #f5f5f5");
   });
 
   it("renders nothing when the selected occurrence cannot be resolved", () => {
