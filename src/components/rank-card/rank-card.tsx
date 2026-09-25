@@ -90,11 +90,14 @@ export function RankCard({ rank }: RankCardProps) {
                     ) : canSelectTechnique && item.type === "technique" ? (
                       <button
                         className={styles.techniqueButton}
-                        onClick={() =>
-                          selectTechnique({
-                            techniqueId: item.technique.id,
-                            rankId: rank.id,
-                          })
+                        onClick={(event) =>
+                          selectTechnique(
+                            {
+                              techniqueId: item.technique.id,
+                              rankId: rank.id,
+                            },
+                            event.currentTarget,
+                          )
                         }
                         type="button"
                       >

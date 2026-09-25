@@ -12,7 +12,29 @@
   background: rgb(31 31 31 / 94%);
   color: #fff;
   box-shadow: 0 1rem 3rem rgb(31 31 31 / 24%);
-  pointer-events: none;
+}
+
+.closeButton {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  display: grid;
+  width: 2.25rem;
+  height: 2.25rem;
+  place-items: center;
+  border: 1px solid rgb(255 255 255 / 24%);
+  border-radius: 50%;
+  background: rgb(255 255 255 / 8%);
+  color: #fff;
+  font: inherit;
+  font-size: 1.25rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.closeButton:focus-visible {
+  outline: 3px solid #fff;
+  outline-offset: 0.2rem;
 }
 
 .label {
@@ -24,6 +46,7 @@
 }
 
 .detail h2 {
+  padding-right: 2.5rem;
   font-size: clamp(1.5rem, 5vw, 2rem);
   letter-spacing: -0.025em;
   line-height: 1.05;

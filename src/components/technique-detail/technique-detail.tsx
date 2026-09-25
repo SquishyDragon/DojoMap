@@ -13,7 +13,7 @@ type TechniqueDetailProps = {
 };
 
 export function TechniqueDetail({ curriculum }: TechniqueDetailProps) {
-  const { selection } = useTechniqueSelection();
+  const { clearTechnique, selection } = useTechniqueSelection();
 
   if (!selection) {
     return null;
@@ -36,6 +36,14 @@ export function TechniqueDetail({ curriculum }: TechniqueDetailProps) {
       className={styles.detail}
       style={{ "--belt-color": context.rank.belt.color } as CSSProperties}
     >
+      <button
+        aria-label="Close technique details"
+        className={styles.closeButton}
+        onClick={clearTechnique}
+        type="button"
+      >
+        <span aria-hidden="true">×</span>
+      </button>
       <p className={styles.label}>Technique detail</p>
       <h2 id={headingId}>{technique.name}</h2>
       <div className={styles.rankContext}>

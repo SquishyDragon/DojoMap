@@ -131,9 +131,15 @@ describe("Home", () => {
   });
 
   it("shows detail for the selected internal technique", () => {
-    render(<Home />);
+    const { container } = render(<Home />);
+    const scrollContainer = container.querySelector("main")!;
+    const techniqueButton = screen.getByRole("button", {
+      name: "Inside block",
+    });
 
-    fireEvent.click(screen.getByRole("button", { name: "Inside block" }));
+    scrollContainer.scrollTop = 1200;
+
+    fireEvent.click(techniqueButton);
 
     expect(
       screen.getByRole("complementary", { name: "Inside block" }),
@@ -146,5 +152,13 @@ describe("Home", () => {
     expect(
       screen.getByRole("complementary", { name: "Inside block" }).textContent,
     ).toContain("Orange Belt");
+
+    fireEvent.click(
+      screen.getByRole("button", { name: "Close technique details" }),
+    );
+
+    expect(screen.queryByRole("complementary")).toBeNull();
+    expect(document.activeElement).toBe(techniqueButton);
+    expect(scrollContainer.scrollTop).toBe(1200);
   });
 });
