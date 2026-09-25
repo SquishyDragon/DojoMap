@@ -9,6 +9,9 @@ describe("NotFound", () => {
   it("provides intentional recovery paths", () => {
     render(<NotFound />);
 
+    expect(screen.getByRole("banner")).toBeDefined();
+    expect(screen.getByRole("main")).toBeDefined();
+    expect(screen.getByRole("contentinfo")).toBeDefined();
     expect(
       screen.getByRole("heading", {
         level: 1,

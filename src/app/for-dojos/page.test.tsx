@@ -25,6 +25,8 @@ describe("ForDojosPage", () => {
   it("provides an intentional unavailable owner action", () => {
     render(<ForDojosPage />);
 
+    expect(screen.getByRole("banner")).toBeDefined();
+    expect(screen.getByRole("main")).toBeDefined();
     const navigation = screen.getByRole("navigation", {
       name: "Owner page navigation",
     });
@@ -46,5 +48,10 @@ describe("ForDojosPage", () => {
         .getAllByRole("link")
         .map((link) => link.getAttribute("href")),
     ).toEqual(["/#dojo-search", "/dojos", "/for-dojos"]);
+    expect(
+      within(navigation)
+        .getByRole("link", { name: "I Own a Dojo" })
+        .getAttribute("aria-current"),
+    ).toBe("page");
   });
 });

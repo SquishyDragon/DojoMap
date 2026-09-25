@@ -8,9 +8,9 @@ import styles from "./page.module.css";
 
 export default function DojosPage() {
   return (
-    <main className={styles.main}>
+    <div className={styles.main}>
       <header className={styles.header}>
-        <Link className={styles.brand} href="/">
+        <Link className={styles.brand} href="/" aria-label="DojoMap home">
           DojoMap
         </Link>
         <nav aria-label="Directory navigation">
@@ -22,29 +22,33 @@ export default function DojosPage() {
         </nav>
       </header>
 
-      <section className={styles.intro} aria-labelledby="directory-title">
-        <p>Dojo directory</p>
-        <h1 id="directory-title">Find a path worth following.</h1>
-        <div className={styles.introMeta}>
-          <p>
-            Explore the dojos currently mapped on DojoMap. Each listing opens
-            its curriculum journey, so you can understand where training leads.
-          </p>
-          <span>
-            {dojoDirectory.length} {dojoDirectory.length === 1 ? "dojo" : "dojos"} mapped
-          </span>
-        </div>
-      </section>
+      <main>
+        <section className={styles.intro} aria-labelledby="directory-title">
+          <p>Dojo directory</p>
+          <h1 id="directory-title">Find a path worth following.</h1>
+          <div className={styles.introMeta}>
+            <p>
+              Explore the dojos currently mapped on DojoMap. Each listing
+              opens its curriculum journey, so you can understand where
+              training leads.
+            </p>
+            <span>
+              {dojoDirectory.length}{" "}
+              {dojoDirectory.length === 1 ? "dojo" : "dojos"} mapped
+            </span>
+          </div>
+        </section>
 
-      <section className={styles.directory} aria-label="Available dojos">
-        {dojoDirectory.map((entry, index) => (
-          <DojoDiscoveryCard
-            dojo={toDojoSearchRecord(entry)}
-            index={index}
-            key={entry.dojo.id}
-          />
-        ))}
-      </section>
-    </main>
+        <section className={styles.directory} aria-label="Available dojos">
+          {dojoDirectory.map((entry, index) => (
+            <DojoDiscoveryCard
+              dojo={toDojoSearchRecord(entry)}
+              index={index}
+              key={entry.dojo.id}
+            />
+          ))}
+        </section>
+      </main>
+    </div>
   );
 }

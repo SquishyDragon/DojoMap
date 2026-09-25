@@ -4,14 +4,14 @@ import styles from "./not-found.module.css";
 
 export default function NotFound() {
   return (
-    <main className={styles.main}>
+    <div className={styles.main}>
       <header>
-        <Link className={styles.brand} href="/">
+        <Link className={styles.brand} href="/" aria-label="DojoMap home">
           DojoMap
         </Link>
       </header>
 
-      <section className={styles.content} aria-labelledby="not-found-title">
+      <main className={styles.content} aria-labelledby="not-found-title">
         <p className={styles.code}>404 · Path not mapped</p>
         <h1 id="not-found-title">This dojo isn’t on the map.</h1>
         <p className={styles.description}>
@@ -26,9 +26,11 @@ export default function NotFound() {
             Return to DojoMap
           </Link>
         </div>
-      </section>
+      </main>
 
-      <p className={styles.footer}>Find the path. Know what comes next.</p>
-    </main>
+      <footer className={styles.footer}>
+        Find the path. Know what comes next.
+      </footer>
+    </div>
   );
 }

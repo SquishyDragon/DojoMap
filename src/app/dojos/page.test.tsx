@@ -30,6 +30,8 @@ describe("DojosPage", () => {
   it("provides navigation back to search and the owner path", () => {
     render(<DojosPage />);
 
+    expect(screen.getByRole("banner")).toBeDefined();
+    expect(screen.getByRole("main")).toBeDefined();
     const navigation = screen.getByRole("navigation", {
       name: "Directory navigation",
     });
@@ -39,5 +41,10 @@ describe("DojosPage", () => {
         .getAllByRole("link")
         .map((link) => link.getAttribute("href")),
     ).toEqual(["/#dojo-search", "/dojos", "/for-dojos"]);
+    expect(
+      within(navigation)
+        .getByRole("link", { name: "Explore Dojos" })
+        .getAttribute("aria-current"),
+    ).toBe("page");
   });
 });

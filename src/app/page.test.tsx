@@ -26,6 +26,9 @@ describe("HomePage", () => {
   it("renders DojoMap instead of a dojo-specific curriculum", () => {
     render(<HomePage />);
 
+    expect(screen.getByRole("banner")).toBeDefined();
+    expect(screen.getByRole("main")).toBeDefined();
+    expect(screen.getByRole("contentinfo")).toBeDefined();
     expect(
       screen.getByRole("heading", {
         level: 1,
@@ -48,6 +51,9 @@ describe("HomePage", () => {
     expect(
       screen.getByRole("search").querySelector('input[type="search"]'),
     ).not.toBeNull();
+    expect(
+      screen.getByRole("searchbox", { name: "Search for your dojo" }),
+    ).toBeDefined();
     expect(
       screen.getByRole("button", { name: "Open first matching dojo" }),
     ).toBeDefined();

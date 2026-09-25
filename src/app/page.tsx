@@ -10,7 +10,7 @@ export default function HomePage() {
   const searchEntries = dojoDirectory.map(toDojoSearchRecord);
 
   return (
-    <main className={styles.main}>
+    <div className={styles.main}>
       <div className={styles.image} aria-hidden="true" />
       <div className={styles.scrim} aria-hidden="true" />
 
@@ -25,7 +25,7 @@ export default function HomePage() {
         </nav>
       </header>
 
-      <section className={styles.hero} aria-labelledby="hero-title">
+      <main className={styles.hero} aria-labelledby="hero-title">
         <p className={styles.eyebrow}>Discipline lives here</p>
         <h1 id="hero-title">
           Your martial arts journey, <em>mapped.</em>
@@ -35,13 +35,13 @@ export default function HomePage() {
         </p>
 
         <DojoSearch entries={searchEntries} />
-      </section>
+      </main>
 
-      <p className={styles.principles}>
+      <footer className={styles.principles}>
         <span>People</span>
         <span>Progress</span>
         <span>Community</span>
-      </p>
-    </main>
+      </footer>
+    </div>
   );
 }
