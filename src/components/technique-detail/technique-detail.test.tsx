@@ -1,4 +1,10 @@
-import { cleanup, fireEvent, render, screen } from "@testing-library/react";
+import {
+  cleanup,
+  fireEvent,
+  render,
+  screen,
+  within,
+} from "@testing-library/react";
 import { afterEach, describe, expect, it } from "vitest";
 
 import { karateCurriculum } from "@/data/karate-curriculum";
@@ -56,6 +62,11 @@ const curriculumWithLinkedResources = {
                   {
                     type: "note",
                     text: "   ",
+                  },
+                  {
+                    type: "video",
+                    label: "Watch the follow-up drill",
+                    url: "https://example.com/follow-up-video",
                   },
                 ],
               },
@@ -207,7 +218,7 @@ describe("TechniqueDetail", () => {
     expect(videoLink.getAttribute("target")).toBe("_blank");
     expect(videoLink.getAttribute("rel")).toContain("noopener");
     expect(videoLink.getAttribute("rel")).toContain("noreferrer");
-    expect(screen.getByText("Video")).toBeDefined();
+    expect(screen.getAllByText("Video")).toHaveLength(2);
     expect(screen.queryByText("Invalid demonstration")).toBeNull();
   });
 
@@ -295,6 +306,60 @@ describe("TechniqueDetail", () => {
     expect(screen.getByText("Note")).toBeDefined();
     expect(note.closest("a")).toBeNull();
     expect(screen.queryByText(/^\s+$/)).toBeNull();
+  });
+
+  it("renders multiple resources once each in dataset order", () => {
+    function MultipleResourcesHarness() {
+      const { selectTechnique } = useTechniqueSelection();
+
+      return (
+        <>
+          <button
+            onClick={() =>
+              selectTechnique({
+                techniqueId: "video-technique",
+                rankId: "purple-belt",
+              })
+            }
+            type="button"
+          >
+            Select multi-resource technique
+          </button>
+          <TechniqueDetail curriculum={curriculumWithLinkedResources} />
+        </>
+      );
+    }
+
+    render(
+      <TechniqueSelectionProvider>
+        <MultipleResourcesHarness />
+      </TechniqueSelectionProvider>,
+    );
+
+    fireEvent.click(
+      screen.getByRole("button", { name: "Select multi-resource technique" }),
+    );
+
+    const resourceList = screen
+      .getByRole("heading", { level: 3, name: "Resources" })
+      .nextElementSibling as HTMLElement;
+    const resourceRows = within(resourceList).getAllByRole("listitem");
+
+    expect(resourceRows.map(({ textContent }) => textContent)).toEqual([
+      "VideoWatch the demonstration↗",
+      "ArticleRead the technique guide↗",
+      "NoteKeep your shoulders relaxed throughout the movement.",
+      "VideoWatch the follow-up drill↗",
+    ]);
+    expect(
+      within(resourceList)
+        .getAllByRole("link")
+        .map((link) => link.getAttribute("href")),
+    ).toEqual([
+      "https://example.com/video",
+      "https://example.com/article",
+      "https://example.com/follow-up-video",
+    ]);
   });
 
   it("renders nothing when the selected occurrence cannot be resolved", () => {
