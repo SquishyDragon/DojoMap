@@ -1,0 +1,19 @@
+.main {
+  display: grid;
+  height: 100vh;
+  height: 100dvh;
+  align-content: start;
+  width: 100%;
+  min-width: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior-y: contain;
+  scroll-behavior: smooth;
+  scroll-snap-type: y mandatory;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .main {
+    scroll-behavior: auto;
+  }
+}

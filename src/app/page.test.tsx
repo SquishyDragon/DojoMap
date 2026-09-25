@@ -7,13 +7,30 @@ import {
 } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
-import Home from "./page";
+import FortMyersKaratePage from "./fort-myers-karate/page";
+import HomePage from "./page";
 
 afterEach(cleanup);
 
-describe("Home", () => {
+describe("HomePage", () => {
+  it("renders DojoMap instead of a dojo-specific curriculum", () => {
+    render(<HomePage />);
+
+    expect(
+      screen.getByRole("heading", {
+        level: 1,
+        name: "Your martial arts journey, mapped.",
+      }),
+    ).toBeDefined();
+    expect(screen.getByText("DojoMap")).toBeDefined();
+    expect(screen.queryByText("Fort Myers Karate")).toBeNull();
+    expect(document.querySelector("[data-journey-scroll]")).toBeNull();
+  });
+});
+
+describe("FortMyersKaratePage", () => {
   it("preserves dojo identity, snap structure, rank order, navigation, and external links", () => {
-    const { container } = render(<Home />);
+    const { container } = render(<FortMyersKaratePage />);
     const journey = container.querySelector<HTMLElement>(
       "[data-journey-scroll]",
     );
@@ -85,7 +102,7 @@ describe("Home", () => {
   });
 
   it("renders the dojo opening before its curriculum", () => {
-    render(<Home />);
+    render(<FortMyersKaratePage />);
 
     expect(
       screen.getByRole("heading", { level: 1, name: "Fort Myers Karate" }),
@@ -98,7 +115,7 @@ describe("Home", () => {
   });
 
   it("updates the progression marker to the centered rank on scroll", () => {
-    const { container } = render(<Home />);
+    const { container } = render(<FortMyersKaratePage />);
     const scrollContainer = container.querySelector("main")!;
     const positions = new Map([
       ["dojo", -800],
@@ -128,7 +145,7 @@ describe("Home", () => {
   });
 
   it("moves to the next journey section with the keyboard", () => {
-    render(<Home />);
+    render(<FortMyersKaratePage />);
     const whiteBelt = document.getElementById("white-belt")!;
     const scrollIntoView = vi.fn();
 
@@ -139,7 +156,7 @@ describe("Home", () => {
   });
 
   it("leaves ordinary wheel scrolling to the native scroll container", () => {
-    const { container } = render(<Home />);
+    const { container } = render(<FortMyersKaratePage />);
     const scrollContainer = container.querySelector("main")!;
     const wheelEvent = new WheelEvent("wheel", {
       cancelable: true,
@@ -152,7 +169,7 @@ describe("Home", () => {
   });
 
   it("shows detail for the selected internal technique", () => {
-    const { container } = render(<Home />);
+    const { container } = render(<FortMyersKaratePage />);
     const scrollContainer = container.querySelector("main")!;
     const techniqueButton = screen.getByRole("button", {
       name: "Inside block",
@@ -203,7 +220,7 @@ describe("Home", () => {
   });
 
   it("preserves external curriculum links without opening details", () => {
-    render(<Home />);
+    render(<FortMyersKaratePage />);
     const externalTechnique = screen.getByRole("link", {
       name: "Front kick (opens in new tab)",
     });
@@ -226,7 +243,7 @@ describe("Home", () => {
   });
 
   it("moves focus into details and dismisses them with Escape", () => {
-    render(<Home />);
+    render(<FortMyersKaratePage />);
     const techniqueButton = screen.getByRole("button", {
       name: "Inside block",
     });
@@ -247,7 +264,7 @@ describe("Home", () => {
   });
 
   it("does not move the journey with arrow keys from technique details", () => {
-    render(<Home />);
+    render(<FortMyersKaratePage />);
     const techniqueButton = screen.getByRole("button", {
       name: "Inside block",
     });
@@ -265,7 +282,7 @@ describe("Home", () => {
   });
 
   it("shows the corresponding curriculum data when techniques are switched", () => {
-    render(<Home />);
+    render(<FortMyersKaratePage />);
     const insideBlock = screen.getByRole("button", { name: "Inside block" });
     const outsideBlock = screen.getByRole("button", {
       name: "Outside block",
@@ -299,7 +316,7 @@ describe("Home", () => {
   });
 
   it("keeps repeated detail interactions free of stale lifecycle state", () => {
-    render(<Home />);
+    render(<FortMyersKaratePage />);
     const insideBlock = screen.getByRole("button", { name: "Inside block" });
     const outsideBlock = screen.getByRole("button", {
       name: "Outside block",
