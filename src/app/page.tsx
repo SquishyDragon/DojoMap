@@ -5,6 +5,7 @@ import { useEffect, useRef, useState, type UIEvent } from "react";
 import { CurriculumMap } from "@/components/curriculum-map/curriculum-map";
 import { DojoIntro } from "@/components/dojo-intro/dojo-intro";
 import { ProgressionNavigator } from "@/components/progression-navigator/progression-navigator";
+import { TechniqueSelectionProvider } from "@/components/technique-detail/technique-selection-context";
 import { fortMyersKarate } from "@/data/fort-myers-karate";
 
 import styles from "./page.module.css";
@@ -95,21 +96,23 @@ export default function Home() {
   };
 
   return (
-    <main
-      className={styles.main}
-      data-journey-scroll
-      onScroll={handleScroll}
-      ref={journeyRef}
-    >
-      <DojoIntro dojo={fortMyersKarate} />
-      <ProgressionNavigator
-        currentRankId={currentRankId}
-        ranks={curriculum.ranks}
-      />
+    <TechniqueSelectionProvider>
+      <main
+        className={styles.main}
+        data-journey-scroll
+        onScroll={handleScroll}
+        ref={journeyRef}
+      >
+        <DojoIntro dojo={fortMyersKarate} />
+        <ProgressionNavigator
+          currentRankId={currentRankId}
+          ranks={curriculum.ranks}
+        />
 
-      <div id="curriculum">
-        <CurriculumMap curriculum={curriculum} />
-      </div>
-    </main>
+        <div id="curriculum">
+          <CurriculumMap curriculum={curriculum} />
+        </div>
+      </main>
+    </TechniqueSelectionProvider>
   );
 }
