@@ -3,10 +3,11 @@
   min-height: 100dvh;
   overflow-y: auto;
   padding: clamp(1.5rem, 4vw, 3rem) clamp(1.5rem, 6vw, 6rem) clamp(3rem, 8vw, 7rem);
-  color: #171918;
+  color: #f6f4ef;
   background:
-    linear-gradient(90deg, transparent 49.9%, rgba(23, 25, 24, 0.08) 50%, transparent 50.1%),
-    #f3f1eb;
+    radial-gradient(circle at 84% 12%, rgba(239, 63, 53, 0.12), transparent 23rem),
+    linear-gradient(90deg, transparent 49.9%, rgba(246, 244, 239, 0.06) 50%, transparent 50.1%),
+    #080a0a;
 }
 
 .header {
@@ -34,7 +35,7 @@
 .header nav a {
   position: relative;
   padding-block: 0.6rem;
-  color: #252827;
+  color: #eeeeea;
   font-size: 0.925rem;
   font-weight: 600;
   text-decoration: none;
@@ -47,7 +48,7 @@
   left: 0;
   height: 0.125rem;
   content: "";
-  background: #d82e28;
+  background: #ef3f35;
   transform: scaleX(0);
   transition: transform 180ms ease;
 }
@@ -60,7 +61,7 @@
 
 .brand:focus-visible,
 .header nav a:focus-visible {
-  outline: 2px solid #171918;
+  outline: 2px solid #f6f4ef;
   outline-offset: 0.35rem;
 }
 
@@ -78,7 +79,7 @@
   gap: 0.9rem;
   align-items: center;
   margin-bottom: 1.25rem;
-  color: #555957;
+  color: #b9bcba;
   font-size: 0.875rem;
   font-weight: 700;
   letter-spacing: 0.24em;
@@ -89,7 +90,7 @@
   width: 2.25rem;
   height: 0.2rem;
   content: "";
-  background: #d82e28;
+  background: #ef3f35;
 }
 
 .hero h1 {
@@ -109,7 +110,7 @@
 }
 
 .heroCopy > p:first-child {
-  color: #454947;
+  color: #c8cbc8;
   font-size: 1.05rem;
   line-height: 1.75;
 }
@@ -126,14 +127,14 @@
   width: 0.65rem;
   height: 0.65rem;
   border-radius: 50%;
-  background: #d82e28;
+  background: #ef3f35;
 }
 
 .benefits {
   max-width: 76rem;
   margin-inline: auto;
   padding-block: clamp(3rem, 6vw, 5rem);
-  border-top: 1px solid #b9b9b3;
+  border-top: 1px solid #3b3e3d;
 }
 
 .benefits > h2 {
@@ -157,7 +158,7 @@
   gap: 1rem;
   align-content: start;
   padding: 0 clamp(1.5rem, 3vw, 3rem);
-  border-left: 1px solid #b9b9b3;
+  border-left: 1px solid #3b3e3d;
 }
 
 .benefitGrid article:first-child {
@@ -170,7 +171,7 @@
 }
 
 .benefitGrid article > span {
-  color: #d82e28;
+  color: #ef3f35;
   font-family: Georgia, "Times New Roman", serif;
   font-size: 1rem;
 }
@@ -183,7 +184,7 @@
 }
 
 .benefitGrid p {
-  color: #555957;
+  color: #b9bcba;
   font-size: 1rem;
   line-height: 1.7;
 }
@@ -195,7 +196,8 @@
   max-width: 76rem;
   margin-inline: auto;
   padding: clamp(2rem, 5vw, 4rem);
-  color: #f3f1eb;
+  color: #f6f4ef;
+  border: 1px solid #3b3e3d;
   background: #121514;
 }
 
@@ -242,7 +244,7 @@
   .benefitGrid article:first-child,
   .benefitGrid article:last-child {
     padding: 2rem 0;
-    border-top: 1px solid #b9b9b3;
+    border-top: 1px solid #3b3e3d;
     border-left: 0;
   }
 
