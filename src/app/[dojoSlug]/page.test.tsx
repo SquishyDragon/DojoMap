@@ -4,8 +4,14 @@ import { fortMyersKarate } from "@/data/fort-myers-karate";
 
 import DojoPage, { generateStaticParams } from "./page";
 
+const { notFound } = vi.hoisted(() => ({
+  notFound: vi.fn(() => {
+    throw new Error("NEXT_NOT_FOUND");
+  }),
+}));
+
 vi.mock("next/navigation", () => ({
-  notFound: vi.fn(),
+  notFound,
 }));
 
 describe("DojoPage", () => {
@@ -21,5 +27,14 @@ describe("DojoPage", () => {
     });
 
     expect(page.props.dojo).toBe(fortMyersKarate);
+  });
+
+  it("terminates unknown dojo routes through the not-found boundary", async () => {
+    await expect(
+      DojoPage({
+        params: Promise.resolve({ dojoSlug: "unknown-dojo" }),
+      }),
+    ).rejects.toThrow("NEXT_NOT_FOUND");
+    expect(notFound).toHaveBeenCalledOnce();
   });
 });
