@@ -12,12 +12,29 @@ import Home from "./page";
 afterEach(cleanup);
 
 describe("Home", () => {
-  it("renders the complete supported curriculum journey", () => {
-    render(<Home />);
+  it("preserves dojo identity, snap structure, rank order, navigation, and external links", () => {
+    const { container } = render(<Home />);
+    const journey = container.querySelector<HTMLElement>(
+      "[data-journey-scroll]",
+    );
 
     expect(
       screen.getByRole("heading", { level: 1, name: "Fort Myers Karate" }),
     ).toBeDefined();
+    expect(journey).not.toBeNull();
+    expect(
+      Array.from(
+        journey!.querySelectorAll<HTMLElement>("[data-journey-section]"),
+      ).map((section) => section.id),
+    ).toEqual([
+      "dojo",
+      "white-belt",
+      "yellow-belt",
+      "orange-belt",
+      "green-belt",
+      "blue-belt",
+      "path-mapped",
+    ]);
 
     const curriculum = screen.getByRole("region", {
       name: "Foundations Karate rank progression",
@@ -50,11 +67,15 @@ describe("Home", () => {
       "#green-belt",
       "#blue-belt",
     ]);
-    expect(
-      screen
-        .getByRole("link", { name: "Front kick (opens in new tab)" })
-        .getAttribute("href"),
-    ).toBe("https://en.wikipedia.org/wiki/Front_kick");
+    const externalLink = screen.getByRole("link", {
+      name: "Front kick (opens in new tab)",
+    });
+
+    expect(externalLink.getAttribute("href")).toBe(
+      "https://en.wikipedia.org/wiki/Front_kick",
+    );
+    expect(externalLink.getAttribute("target")).toBe("_blank");
+    expect(externalLink.getAttribute("rel")).toContain("noopener");
     expect(
       screen.getByRole("button", { name: "Roundhouse kick" }),
     ).toBeDefined();
