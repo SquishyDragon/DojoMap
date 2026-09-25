@@ -143,6 +143,39 @@ describe("TechniqueDetail", () => {
     ).toContain("--belt-color: #ea7c2b");
   });
 
+  it("keeps techniques without resources complete and intentional", () => {
+    render(
+      <TechniqueSelectionProvider>
+        <DetailHarness />
+      </TechniqueSelectionProvider>,
+    );
+
+    fireEvent.click(
+      screen.getByRole("button", { name: "Select inside block" }),
+    );
+
+    const detail = screen.getByRole("complementary", {
+      name: "Inside block",
+    });
+
+    expect(
+      within(detail).getByRole("heading", { level: 2, name: "Inside block" }),
+    ).toBeDefined();
+    expect(within(detail).getByText("Orange Belt")).toBeDefined();
+    expect(
+      within(detail).getByText(
+        "A defensive motion that travels across the body to redirect an incoming attack.",
+      ),
+    ).toBeDefined();
+    expect(
+      within(detail).queryByRole("heading", { level: 3, name: "Resources" }),
+    ).toBeNull();
+    expect(within(detail).queryByRole("link")).toBeNull();
+    expect(
+      within(detail).queryByRole("button", { name: /resource/i }),
+    ).toBeNull();
+  });
+
   it("reuses the same view when selection changes to another technique", () => {
     render(
       <TechniqueSelectionProvider>
