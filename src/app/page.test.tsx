@@ -184,4 +184,43 @@ describe("Home", () => {
       screen.queryByRole("button", { name: "Front kick" }),
     ).toBeNull();
   });
+
+  it("moves focus into details and dismisses them with Escape", () => {
+    render(<Home />);
+    const techniqueButton = screen.getByRole("button", {
+      name: "Inside block",
+    });
+
+    techniqueButton.focus();
+    fireEvent.click(techniqueButton, { detail: 0 });
+
+    const closeButton = screen.getByRole("button", {
+      name: "Close technique details",
+    });
+
+    expect(document.activeElement).toBe(closeButton);
+
+    fireEvent.keyDown(window, { key: "Escape" });
+
+    expect(screen.queryByRole("complementary")).toBeNull();
+    expect(document.activeElement).toBe(techniqueButton);
+  });
+
+  it("does not move the journey with arrow keys from technique details", () => {
+    render(<Home />);
+    const techniqueButton = screen.getByRole("button", {
+      name: "Inside block",
+    });
+    const whiteBelt = document.getElementById("white-belt")!;
+    const scrollIntoView = vi.fn();
+
+    whiteBelt.scrollIntoView = scrollIntoView;
+    fireEvent.click(techniqueButton);
+    fireEvent.keyDown(
+      screen.getByRole("button", { name: "Close technique details" }),
+      { key: "ArrowDown" },
+    );
+
+    expect(scrollIntoView).not.toHaveBeenCalled();
+  });
 });

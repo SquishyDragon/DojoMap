@@ -45,12 +45,14 @@ export default function Home() {
           : event.key === "ArrowUp" || event.key === "PageUp"
             ? -1
             : 0;
-      const target = event.target as HTMLElement | null;
+      const target =
+        event.target instanceof HTMLElement ? event.target : null;
       const isEditing =
         target?.isContentEditable ||
         target?.tagName === "INPUT" ||
         target?.tagName === "SELECT" ||
         target?.tagName === "TEXTAREA";
+      const isInTechniqueDetail = target?.closest("[data-technique-detail]");
 
       if (
         direction === 0 ||
@@ -58,7 +60,8 @@ export default function Home() {
         event.altKey ||
         event.ctrlKey ||
         event.metaKey ||
-        isEditing
+        isEditing ||
+        isInTechniqueDetail
       ) {
         return;
       }

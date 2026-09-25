@@ -1,6 +1,6 @@
 "use client";
 
-import type { CSSProperties } from "react";
+import { useEffect, useRef, type CSSProperties } from "react";
 
 import type { Curriculum, TechniqueResource } from "@/domain/curriculum";
 import { getTechniqueContexts } from "@/domain/curriculum";
@@ -73,6 +73,26 @@ function TechniqueResources({
 
 export function TechniqueDetail({ curriculum }: TechniqueDetailProps) {
   const { clearTechnique, selection } = useTechniqueSelection();
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    if (!selection) {
+      return;
+    }
+
+    closeButtonRef.current?.focus();
+
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        event.preventDefault();
+        clearTechnique();
+      }
+    };
+
+    window.addEventListener("keydown", handleEscape);
+
+    return () => window.removeEventListener("keydown", handleEscape);
+  }, [clearTechnique, selection]);
 
   if (!selection) {
     return null;
@@ -93,12 +113,14 @@ export function TechniqueDetail({ curriculum }: TechniqueDetailProps) {
     <aside
       aria-labelledby={headingId}
       className={styles.detail}
+      data-technique-detail
       style={{ "--belt-color": context.rank.belt.color } as CSSProperties}
     >
       <button
         aria-label="Close technique details"
         className={styles.closeButton}
         onClick={clearTechnique}
+        ref={closeButtonRef}
         type="button"
       >
         <span aria-hidden="true">×</span>
