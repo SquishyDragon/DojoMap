@@ -22,14 +22,24 @@ describe("ForDojosPage", () => {
     ).toBeDefined();
   });
 
-  it("does not imply an available onboarding workflow", () => {
+  it("provides an intentional unavailable owner action", () => {
     render(<ForDojosPage />);
 
     const navigation = screen.getByRole("navigation", {
       name: "Owner page navigation",
     });
 
-    expect(screen.queryByRole("button")).toBeNull();
+    const ownerAction = screen.getByRole("button", {
+      name: "Owner applications — coming soon",
+    });
+
+    expect(ownerAction.hasAttribute("disabled")).toBe(true);
+    expect(ownerAction.getAttribute("aria-describedby")).toBe(
+      "owner-access-status",
+    );
+    expect(
+      screen.getByText(/There is nothing to submit yet/i),
+    ).toBeDefined();
     expect(screen.queryByRole("form")).toBeNull();
     expect(
       within(navigation)

@@ -78,6 +78,30 @@ export default function ForDojosPage() {
           today.
         </p>
       </aside>
+
+      <section className={styles.cta} aria-labelledby="owner-cta-title">
+        <div>
+          <p>Bring your dojo to DojoMap</p>
+          <h2 id="owner-cta-title">Ready when the path opens.</h2>
+        </div>
+        <div className={styles.ctaAction}>
+          <p>
+            We are designing a guided owner application so each dojo begins
+            with a clear, accurate curriculum—not an empty profile.
+          </p>
+          <button
+            aria-describedby="owner-access-status"
+            disabled
+            type="button"
+          >
+            Owner applications — coming soon
+          </button>
+          <p className={styles.ctaStatus} id="owner-access-status" role="status">
+            There is nothing to submit yet. This page will be updated when
+            applications open.
+          </p>
+        </div>
+      </section>
     </main>
   );
 }
