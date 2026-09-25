@@ -21,10 +21,12 @@ describe("DojosPage", () => {
       ),
     ).toEqual(dojoDirectory.map(({ dojo }) => dojo.name));
     expect(
-      within(cards[0])
-        .getByRole("link", { name: /view curriculum/i })
-        .getAttribute("href"),
-    ).toBe("/fort-myers-karate");
+      cards.map((card) =>
+        within(card)
+          .getByRole("link", { name: /view curriculum/i })
+          .getAttribute("href"),
+      ),
+    ).toEqual(dojoDirectory.map(({ slug }) => `/${slug}`));
   });
 
   it("provides navigation back to search and the owner path", () => {

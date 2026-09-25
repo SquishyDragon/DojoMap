@@ -37,6 +37,16 @@ describe("dojoDirectory", () => {
     expect(findDojoBySlug(dojoDirectory, "unknown-dojo")).toBeUndefined();
   });
 
+  it("derives discovery data from the canonical dojo record", () => {
+    expect(toDojoSearchRecord(dojoDirectory[0])).toEqual({
+      slug: "fort-myers-karate",
+      name: "Fort Myers Karate",
+      location: "Fort Myers, Florida",
+      discipline: "Karate",
+      summary: "Your path from first lesson to black belt.",
+    });
+  });
+
   it("finds dojos by case-insensitive name, location, and discipline", () => {
     const records = dojoDirectory.map(toDojoSearchRecord);
 
@@ -45,5 +55,23 @@ describe("dojoDirectory", () => {
     expect(searchDojos(records, "karate")).toHaveLength(1);
     expect(searchDojos(records, "  ")).toEqual([]);
     expect(searchDojos(records, "missing dojo")).toEqual([]);
+  });
+
+  it("trims partial queries and preserves directory order", () => {
+    const records = [
+      toDojoSearchRecord(dojoDirectory[0]),
+      {
+        slug: "fort-myers-judo",
+        name: "Fort Myers Judo",
+        location: "Fort Myers, Florida",
+        discipline: "Judo",
+        summary: "A second matching dojo used to verify ordering.",
+      },
+    ];
+
+    expect(searchDojos(records, "  fort myers  ").map(({ slug }) => slug)).toEqual([
+      "fort-myers-karate",
+      "fort-myers-judo",
+    ]);
   });
 });

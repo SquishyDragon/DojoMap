@@ -47,6 +47,10 @@ describe("DojoSearch", () => {
     });
 
     expect(link.getAttribute("href")).toBe("/fort-myers-karate");
+    expect(
+      screen.getByRole("button", { name: "Open first matching dojo" })
+        .hasAttribute("disabled"),
+    ).toBe(false);
   });
 
   it("opens the first matching dojo when the search is submitted", () => {
@@ -73,5 +77,9 @@ describe("DojoSearch", () => {
     expect(
       screen.getByRole("link", { name: "Browse all dojos" }).getAttribute("href"),
     ).toBe("/dojos");
+    expect(
+      screen.getByRole("button", { name: "Open first matching dojo" })
+        .hasAttribute("disabled"),
+    ).toBe(true);
   });
 });

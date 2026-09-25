@@ -1,8 +1,9 @@
 import { describe, expect, it, vi } from "vitest";
 
+import { dojoDirectory } from "@/data/dojo-directory";
 import { fortMyersKarate } from "@/data/fort-myers-karate";
 
-import DojoPage, { generateStaticParams } from "./page";
+import DojoPage, { dynamicParams, generateStaticParams } from "./page";
 
 const { notFound } = vi.hoisted(() => ({
   notFound: vi.fn(() => {
@@ -16,9 +17,10 @@ vi.mock("next/navigation", () => ({
 
 describe("DojoPage", () => {
   it("generates canonical routes from the dojo directory", () => {
-    expect(generateStaticParams()).toEqual([
-      { dojoSlug: "fort-myers-karate" },
-    ]);
+    expect(dynamicParams).toBe(false);
+    expect(generateStaticParams()).toEqual(
+      dojoDirectory.map(({ slug }) => ({ dojoSlug: slug })),
+    );
   });
 
   it("resolves Fort Myers Karate from its directory slug", async () => {
@@ -36,5 +38,6 @@ describe("DojoPage", () => {
       }),
     ).rejects.toThrow("NEXT_NOT_FOUND");
     expect(notFound).toHaveBeenCalledOnce();
+    expect(notFound).toHaveBeenCalledWith();
   });
 });
