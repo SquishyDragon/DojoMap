@@ -1,11 +1,20 @@
 import { cleanup, render, within } from "@testing-library/react";
 import { afterEach, describe, expect, it } from "vitest";
 
+import { TechniqueSelectionProvider } from "@/components/technique-detail/technique-selection-context";
 import type { Curriculum, Rank, Technique } from "@/domain/curriculum";
 
 import { CurriculumMap } from "./curriculum-map";
 
 afterEach(cleanup);
+
+function renderCurriculum(curriculum?: Curriculum | null) {
+  return render(
+    <TechniqueSelectionProvider>
+      <CurriculumMap curriculum={curriculum} />
+    </TechniqueSelectionProvider>,
+  );
+}
 
 function makeRank(id: string, name: string, order: number): Rank {
   return {
@@ -99,8 +108,8 @@ const variableCurriculum = {
 
 describe("CurriculumMap", () => {
   it("renders every rank exactly once in dataset order", () => {
-    const { container, getAllByRole } = render(
-      <CurriculumMap curriculum={curriculumInDatasetOrder} />,
+    const { container, getAllByRole } = renderCurriculum(
+      curriculumInDatasetOrder,
     );
 
     const rankHeadings = getAllByRole("article").map((article) =>
@@ -129,9 +138,7 @@ describe("CurriculumMap", () => {
   });
 
   it("renders ranks with different category and item counts", () => {
-    const { container } = render(
-      <CurriculumMap curriculum={variableCurriculum} />,
-    );
+    const { container } = renderCurriculum(variableCurriculum);
     const rankSections = Array.from(
       container.querySelectorAll<HTMLElement>("ol > li"),
     );
@@ -158,8 +165,8 @@ describe("CurriculumMap", () => {
   });
 
   it("ends with a separate, intentional journey conclusion", () => {
-    const { container, getByText } = render(
-      <CurriculumMap curriculum={curriculumInDatasetOrder} />,
+    const { container, getByText } = renderCurriculum(
+      curriculumInDatasetOrder,
     );
     const rankSections = Array.from(
       container.querySelectorAll<HTMLElement>("ol > li"),
@@ -184,9 +191,8 @@ describe("CurriculumMap", () => {
   it.each([undefined, null])(
     "renders an intentional state when the curriculum is %s",
     (curriculum) => {
-      const { getByRole, getByText, queryByRole } = render(
-        <CurriculumMap curriculum={curriculum} />,
-      );
+      const { getByRole, getByText, queryByRole } =
+        renderCurriculum(curriculum);
 
       expect(getByRole("status")).toBeDefined();
       expect(
@@ -198,9 +204,8 @@ describe("CurriculumMap", () => {
   );
 
   it("renders an intentional state when the curriculum has no ranks", () => {
-    const { getByRole, getByText, queryByRole } = render(
-      <CurriculumMap curriculum={emptyCurriculum} />,
-    );
+    const { getByRole, getByText, queryByRole } =
+      renderCurriculum(emptyCurriculum);
 
     expect(getByRole("status")).toBeDefined();
     expect(

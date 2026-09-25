@@ -1,9 +1,15 @@
-import { render, screen } from "@testing-library/react";
-import { describe, expect, it } from "vitest";
+import { cleanup, fireEvent, render, screen } from "@testing-library/react";
+import { afterEach, describe, expect, it } from "vitest";
 
+import {
+  TechniqueSelectionProvider,
+  useTechniqueSelection,
+} from "@/components/technique-detail/technique-selection-context";
 import type { Rank } from "@/domain/curriculum";
 
 import { RankCard } from "./rank-card";
+
+afterEach(cleanup);
 
 const orangeBelt = {
   id: "orange-belt",
@@ -64,7 +70,11 @@ const orangeBelt = {
 
 describe("RankCard", () => {
   it("renders the supplied rank name, belt details, and requirements", () => {
-    render(<RankCard rank={orangeBelt} />);
+    render(
+      <TechniqueSelectionProvider>
+        <RankCard rank={orangeBelt} />
+      </TechniqueSelectionProvider>,
+    );
 
     expect(
       screen.getByRole("heading", { level: 2, name: "Orange Belt" }),
@@ -91,10 +101,42 @@ describe("RankCard", () => {
     );
     expect(resourceLink.getAttribute("target")).toBe("_blank");
     expect(resourceLink.getAttribute("rel")).toContain("noreferrer");
-    expect(screen.getByText("Inside block").closest("a")).toBeNull();
+    expect(
+      screen.getByRole("button", { name: "Inside block" }),
+    ).toBeDefined();
     expect(screen.getByText("Foundations form 2").closest("a")).toBeNull();
     expect(screen.getByText("Unavailable video").closest("a")).toBeNull();
     expect(screen.getAllByRole("link")).toHaveLength(1);
     expect(screen.getByText("Foundations form 2")).toBeDefined();
+  });
+
+  it("selects an internal technique with its rank context", () => {
+    function SelectionValue() {
+      const { selection } = useTechniqueSelection();
+
+      return (
+        <output>
+          {selection
+            ? `${selection.techniqueId} at ${selection.rankId}`
+            : "No selection"}
+        </output>
+      );
+    }
+
+    render(
+      <TechniqueSelectionProvider>
+        <RankCard rank={orangeBelt} />
+        <SelectionValue />
+      </TechniqueSelectionProvider>,
+    );
+
+    fireEvent.click(screen.getByRole("button", { name: "Inside block" }));
+
+    expect(screen.getByText("inside-block at orange-belt")).toBeDefined();
+    expect(
+      screen.getByRole("link", {
+        name: "Roundhouse kick (opens in new tab)",
+      }),
+    ).toBeDefined();
   });
 });

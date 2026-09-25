@@ -55,7 +55,9 @@ describe("Home", () => {
         .getByRole("link", { name: "Front kick (opens in new tab)" })
         .getAttribute("href"),
     ).toBe("https://en.wikipedia.org/wiki/Front_kick");
-    expect(screen.getByText("Roundhouse kick").closest("a")).toBeNull();
+    expect(
+      screen.getByRole("button", { name: "Roundhouse kick" }),
+    ).toBeDefined();
     expect(
       screen.getByRole("heading", { level: 2, name: "The journey continues" }),
     ).toBeDefined();

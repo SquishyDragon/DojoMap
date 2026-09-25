@@ -117,6 +117,23 @@
   vertical-align: super;
 }
 
+.techniqueButton {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-weight: 700;
+  text-align: left;
+  cursor: pointer;
+}
+
+.techniqueButton:focus-visible {
+  border-radius: 0.25rem;
+  outline: 3px solid #8f3225;
+  outline-offset: 0.25rem;
+}
+
 @media (max-width: 30rem) {
   .card {
     gap: 1.25rem;

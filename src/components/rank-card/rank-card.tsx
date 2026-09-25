@@ -3,6 +3,7 @@ import {
   getCurriculumItemName,
   type Rank,
 } from "@/domain/curriculum";
+import { useTechniqueSelection } from "@/components/technique-detail/technique-selection-context";
 
 import styles from "./rank-card.module.css";
 
@@ -28,6 +29,7 @@ function hasAvailableExternalResource(
 
 export function RankCard({ rank }: RankCardProps) {
   const headingId = `${rank.id}-title`;
+  const { selectTechnique } = useTechniqueSelection();
 
   return (
     <article aria-labelledby={headingId} className={styles.card}>
@@ -57,10 +59,16 @@ export function RankCard({ rank }: RankCardProps) {
                 const hasDestination = hasAvailableExternalResource(
                   item.resource,
                 );
+                const canSelectTechnique =
+                  item.type === "technique" && !hasDestination;
 
                 return (
                   <li
-                    className={hasDestination ? styles.resourceItem : undefined}
+                    className={
+                      hasDestination || canSelectTechnique
+                        ? styles.resourceItem
+                        : undefined
+                    }
                     key={itemId}
                   >
                     {hasDestination && item.resource?.type === "external" ? (
@@ -79,6 +87,19 @@ export function RankCard({ rank }: RankCardProps) {
                           ↗
                         </span>
                       </a>
+                    ) : canSelectTechnique && item.type === "technique" ? (
+                      <button
+                        className={styles.techniqueButton}
+                        onClick={() =>
+                          selectTechnique({
+                            techniqueId: item.technique.id,
+                            rankId: rank.id,
+                          })
+                        }
+                        type="button"
+                      >
+                        {itemName}
+                      </button>
                     ) : (
                       <span>{itemName}</span>
                     )}
