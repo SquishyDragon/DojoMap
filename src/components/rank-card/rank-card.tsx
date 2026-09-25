@@ -101,7 +101,13 @@ export function RankCard({ rank }: RankCardProps) {
                         }
                         type="button"
                       >
-                        {itemName}
+                        <span>{itemName}</span>
+                        <span
+                          aria-hidden="true"
+                          className={styles.techniqueIcon}
+                        >
+                          ›
+                        </span>
                       </button>
                     ) : (
                       <span>{itemName}</span>

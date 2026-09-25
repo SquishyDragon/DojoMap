@@ -92,22 +92,39 @@
 }
 
 .resourceLink {
+  display: inline-flex;
+  align-items: baseline;
+  margin: -0.25rem;
+  padding: 0.25rem;
   border-radius: 0.25rem;
   color: inherit;
   font-weight: 700;
+  touch-action: manipulation;
+  transition:
+    color 160ms ease,
+    background-color 160ms ease,
+    transform 100ms ease;
   text-decoration-color: rgb(143 50 37 / 40%);
   text-decoration-thickness: 1px;
   text-underline-offset: 0.2em;
+  -webkit-tap-highlight-color: rgb(143 50 37 / 16%);
 }
 
 .resourceLink:hover {
+  background: rgb(143 50 37 / 8%);
   color: #8f3225;
   text-decoration-color: currentcolor;
 }
 
 .resourceLink:focus-visible {
+  background: rgb(143 50 37 / 8%);
   outline: 3px solid #8f3225;
   outline-offset: 0.25rem;
+}
+
+.resourceLink:active {
+  background: rgb(143 50 37 / 16%);
+  transform: scale(0.98);
 }
 
 .resourceIcon {
@@ -118,20 +135,54 @@
 }
 
 .techniqueButton {
-  padding: 0;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.375rem;
+  margin: -0.25rem;
+  padding: 0.25rem;
   border: 0;
+  border-radius: 0.25rem;
   background: transparent;
   color: inherit;
   font: inherit;
   font-weight: 700;
   text-align: left;
+  touch-action: manipulation;
+  transition:
+    color 160ms ease,
+    background-color 160ms ease,
+    transform 100ms ease;
   cursor: pointer;
+  -webkit-tap-highlight-color: rgb(143 50 37 / 16%);
+}
+
+.techniqueIcon {
+  color: #8f3225;
+  font-size: 1.1em;
+  line-height: 1;
+}
+
+.techniqueButton:hover {
+  background: rgb(143 50 37 / 8%);
+  color: #8f3225;
 }
 
 .techniqueButton:focus-visible {
-  border-radius: 0.25rem;
+  background: rgb(143 50 37 / 8%);
   outline: 3px solid #8f3225;
   outline-offset: 0.25rem;
+}
+
+.techniqueButton:active {
+  background: rgb(143 50 37 / 16%);
+  transform: scale(0.98);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .resourceLink,
+  .techniqueButton {
+    transition: none;
+  }
 }
 
 @media (max-width: 30rem) {
