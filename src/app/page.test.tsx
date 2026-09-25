@@ -161,4 +161,27 @@ describe("Home", () => {
     expect(document.activeElement).toBe(techniqueButton);
     expect(scrollContainer.scrollTop).toBe(1200);
   });
+
+  it("preserves external curriculum links without opening details", () => {
+    render(<Home />);
+    const externalTechnique = screen.getByRole("link", {
+      name: "Front kick (opens in new tab)",
+    });
+
+    externalTechnique.addEventListener("click", (event) =>
+      event.preventDefault(),
+    );
+    fireEvent.click(externalTechnique);
+
+    expect(externalTechnique.getAttribute("href")).toBe(
+      "https://en.wikipedia.org/wiki/Front_kick",
+    );
+    expect(externalTechnique.getAttribute("target")).toBe("_blank");
+    expect(externalTechnique.getAttribute("rel")).toContain("noopener");
+    expect(externalTechnique.getAttribute("rel")).toContain("noreferrer");
+    expect(screen.queryByRole("complementary")).toBeNull();
+    expect(
+      screen.queryByRole("button", { name: "Front kick" }),
+    ).toBeNull();
+  });
 });
