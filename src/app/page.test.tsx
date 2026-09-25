@@ -129,4 +129,19 @@ describe("Home", () => {
 
     expect(wheelEvent.defaultPrevented).toBe(false);
   });
+
+  it("shows detail for the selected internal technique", () => {
+    render(<Home />);
+
+    fireEvent.click(screen.getByRole("button", { name: "Inside block" }));
+
+    expect(
+      screen.getByRole("complementary", { name: "Inside block" }),
+    ).toBeDefined();
+    expect(
+      screen.getByText(
+        "A defensive motion that travels across the body to redirect an incoming attack.",
+      ),
+    ).toBeDefined();
+  });
 });

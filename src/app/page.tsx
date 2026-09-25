@@ -5,6 +5,7 @@ import { useEffect, useRef, useState, type UIEvent } from "react";
 import { CurriculumMap } from "@/components/curriculum-map/curriculum-map";
 import { DojoIntro } from "@/components/dojo-intro/dojo-intro";
 import { ProgressionNavigator } from "@/components/progression-navigator/progression-navigator";
+import { TechniqueDetail } from "@/components/technique-detail/technique-detail";
 import { TechniqueSelectionProvider } from "@/components/technique-detail/technique-selection-context";
 import { fortMyersKarate } from "@/data/fort-myers-karate";
 
@@ -113,6 +114,7 @@ export default function Home() {
           <CurriculumMap curriculum={curriculum} />
         </div>
       </main>
+      <TechniqueDetail curriculum={curriculum} />
     </TechniqueSelectionProvider>
   );
 }
