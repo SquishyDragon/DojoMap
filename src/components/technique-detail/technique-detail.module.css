@@ -29,6 +29,28 @@
   line-height: 1.05;
 }
 
+.rankContext {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  margin-block: 0.125rem 0.25rem;
+  color: #d8d4cd;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.beltColor {
+  width: 2.75rem;
+  height: 0.625rem;
+  flex: 0 0 auto;
+  border: 1px solid rgb(255 255 255 / 32%);
+  border-radius: 999px;
+  background: var(--belt-color);
+  box-shadow: inset 0 -1px 0 rgb(31 31 31 / 18%);
+}
+
 .description {
   color: #e7e3dc;
   font-size: 0.9375rem;

@@ -143,5 +143,8 @@ describe("Home", () => {
         "A defensive motion that travels across the body to redirect an incoming attack.",
       ),
     ).toBeDefined();
+    expect(
+      screen.getByRole("complementary", { name: "Inside block" }).textContent,
+    ).toContain("Orange Belt");
   });
 });

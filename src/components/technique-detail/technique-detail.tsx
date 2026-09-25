@@ -1,5 +1,7 @@
 "use client";
 
+import type { CSSProperties } from "react";
+
 import type { Curriculum } from "@/domain/curriculum";
 import { getTechniqueContexts } from "@/domain/curriculum";
 
@@ -29,9 +31,17 @@ export function TechniqueDetail({ curriculum }: TechniqueDetailProps) {
   const headingId = `technique-detail-${technique.id}`;
 
   return (
-    <aside aria-labelledby={headingId} className={styles.detail}>
+    <aside
+      aria-labelledby={headingId}
+      className={styles.detail}
+      style={{ "--belt-color": context.rank.belt.color } as CSSProperties}
+    >
       <p className={styles.label}>Technique detail</p>
       <h2 id={headingId}>{technique.name}</h2>
+      <div className={styles.rankContext}>
+        <span aria-hidden="true" className={styles.beltColor} />
+        <span>{context.rank.name}</span>
+      </div>
       <p className={styles.description}>{technique.description}</p>
     </aside>
   );

@@ -55,6 +55,12 @@ describe("TechniqueDetail", () => {
         "A defensive motion that travels across the body to redirect an incoming attack.",
       ),
     ).toBeDefined();
+    expect(screen.getByText("Orange Belt")).toBeDefined();
+    expect(
+      screen
+        .getByRole("complementary", { name: "Inside block" })
+        .getAttribute("style"),
+    ).toContain("--belt-color: #ea7c2b");
   });
 
   it("renders nothing when the selected occurrence cannot be resolved", () => {
