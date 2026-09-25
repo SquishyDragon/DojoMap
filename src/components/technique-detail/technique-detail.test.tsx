@@ -49,6 +49,14 @@ const curriculumWithLinkedResources = {
                     label: "Read the technique guide",
                     url: "https://example.com/article",
                   },
+                  {
+                    type: "note",
+                    text: "Keep your shoulders relaxed throughout the movement.",
+                  },
+                  {
+                    type: "note",
+                    text: "   ",
+                  },
                 ],
               },
             },
@@ -246,6 +254,47 @@ describe("TechniqueDetail", () => {
     expect(articleLink.getAttribute("rel")).toContain("noopener");
     expect(articleLink.getAttribute("rel")).toContain("noreferrer");
     expect(screen.getByText("Article")).toBeDefined();
+  });
+
+  it("renders note resources as text rather than links", () => {
+    function NoteHarness() {
+      const { selectTechnique } = useTechniqueSelection();
+
+      return (
+        <>
+          <button
+            onClick={() =>
+              selectTechnique({
+                techniqueId: "video-technique",
+                rankId: "purple-belt",
+              })
+            }
+            type="button"
+          >
+            Select noted technique
+          </button>
+          <TechniqueDetail curriculum={curriculumWithLinkedResources} />
+        </>
+      );
+    }
+
+    render(
+      <TechniqueSelectionProvider>
+        <NoteHarness />
+      </TechniqueSelectionProvider>,
+    );
+
+    fireEvent.click(
+      screen.getByRole("button", { name: "Select noted technique" }),
+    );
+
+    const note = screen.getByText(
+      "Keep your shoulders relaxed throughout the movement.",
+    );
+
+    expect(screen.getByText("Note")).toBeDefined();
+    expect(note.closest("a")).toBeNull();
+    expect(screen.queryByText(/^\s+$/)).toBeNull();
   });
 
   it("renders nothing when the selected occurrence cannot be resolved", () => {

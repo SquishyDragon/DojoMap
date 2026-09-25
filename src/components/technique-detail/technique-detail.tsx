@@ -27,18 +27,13 @@ function TechniqueResources({
 }: {
   resources: readonly TechniqueResource[];
 }) {
-  const linkedResources = resources.filter(
-    (
-      resource,
-    ): resource is Extract<
-      TechniqueResource,
-      { type: "video" | "article" }
-    > =>
-      (resource.type === "video" || resource.type === "article") &&
-      isSafeExternalUrl(resource.url),
+  const renderableResources = resources.filter((resource) =>
+    resource.type === "note"
+      ? resource.text.trim().length > 0
+      : isSafeExternalUrl(resource.url),
   );
 
-  if (linkedResources.length === 0) {
+  if (renderableResources.length === 0) {
     return null;
   }
 
@@ -46,22 +41,29 @@ function TechniqueResources({
     <div className={styles.resources}>
       <h3>Resources</h3>
       <ul>
-        {linkedResources.map((resource) => (
-          <li key={`${resource.type}-${resource.url}`}>
-            <a
-              aria-label={`${resource.label} (${resource.type}, opens in new tab)`}
-              href={resource.url}
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              <span className={styles.resourceType}>
-                {resource.type === "video" ? "Video" : "Article"}
-              </span>
-              <span>{resource.label}</span>
-              <span aria-hidden="true" className={styles.resourceIcon}>
-                ↗
-              </span>
-            </a>
+        {renderableResources.map((resource, index) => (
+          <li key={`${resource.type}-${index}`}>
+            {resource.type === "note" ? (
+              <p className={styles.note}>
+                <span className={styles.resourceType}>Note</span>
+                <span>{resource.text}</span>
+              </p>
+            ) : (
+              <a
+                aria-label={`${resource.label} (${resource.type}, opens in new tab)`}
+                href={resource.url}
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                <span className={styles.resourceType}>
+                  {resource.type === "video" ? "Video" : "Article"}
+                </span>
+                <span>{resource.label}</span>
+                <span aria-hidden="true" className={styles.resourceIcon}>
+                  ↗
+                </span>
+              </a>
+            )}
           </li>
         ))}
       </ul>

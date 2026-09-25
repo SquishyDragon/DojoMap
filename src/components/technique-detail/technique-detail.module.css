@@ -123,6 +123,15 @@
   outline-offset: 0.2rem;
 }
 
+.note {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  color: #e7e3dc;
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
 .resourceType {
   color: #d8d4cd;
   font-size: 0.625rem;
