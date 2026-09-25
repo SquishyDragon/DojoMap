@@ -27,14 +27,18 @@ function TechniqueResources({
 }: {
   resources: readonly TechniqueResource[];
 }) {
-  const videos = resources.filter(
+  const linkedResources = resources.filter(
     (
       resource,
-    ): resource is Extract<TechniqueResource, { type: "video" }> =>
-      resource.type === "video" && isSafeExternalUrl(resource.url),
+    ): resource is Extract<
+      TechniqueResource,
+      { type: "video" | "article" }
+    > =>
+      (resource.type === "video" || resource.type === "article") &&
+      isSafeExternalUrl(resource.url),
   );
 
-  if (videos.length === 0) {
+  if (linkedResources.length === 0) {
     return null;
   }
 
@@ -42,16 +46,18 @@ function TechniqueResources({
     <div className={styles.resources}>
       <h3>Resources</h3>
       <ul>
-        {videos.map((video) => (
-          <li key={`${video.type}-${video.url}`}>
+        {linkedResources.map((resource) => (
+          <li key={`${resource.type}-${resource.url}`}>
             <a
-              aria-label={`${video.label} (video, opens in new tab)`}
-              href={video.url}
+              aria-label={`${resource.label} (${resource.type}, opens in new tab)`}
+              href={resource.url}
               rel="noopener noreferrer"
               target="_blank"
             >
-              <span className={styles.resourceType}>Video</span>
-              <span>{video.label}</span>
+              <span className={styles.resourceType}>
+                {resource.type === "video" ? "Video" : "Article"}
+              </span>
+              <span>{resource.label}</span>
               <span aria-hidden="true" className={styles.resourceIcon}>
                 ↗
               </span>

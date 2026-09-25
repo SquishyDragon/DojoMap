@@ -12,7 +12,7 @@ import {
 
 afterEach(cleanup);
 
-const curriculumWithVideo = {
+const curriculumWithLinkedResources = {
   id: "video-curriculum",
   name: "Video Curriculum",
   discipline: "Karate",
@@ -43,6 +43,11 @@ const curriculumWithVideo = {
                     type: "video",
                     label: "Invalid demonstration",
                     url: "javascript:alert('unsafe')",
+                  },
+                  {
+                    type: "article",
+                    label: "Read the technique guide",
+                    url: "https://example.com/article",
                   },
                 ],
               },
@@ -171,7 +176,7 @@ describe("TechniqueDetail", () => {
           >
             Select video technique
           </button>
-          <TechniqueDetail curriculum={curriculumWithVideo} />
+          <TechniqueDetail curriculum={curriculumWithLinkedResources} />
         </>
       );
     }
@@ -196,6 +201,51 @@ describe("TechniqueDetail", () => {
     expect(videoLink.getAttribute("rel")).toContain("noreferrer");
     expect(screen.getByText("Video")).toBeDefined();
     expect(screen.queryByText("Invalid demonstration")).toBeNull();
+  });
+
+  it("renders valid article resources as safe external links", () => {
+    function ArticleHarness() {
+      const { selectTechnique } = useTechniqueSelection();
+
+      return (
+        <>
+          <button
+            onClick={() =>
+              selectTechnique({
+                techniqueId: "video-technique",
+                rankId: "purple-belt",
+              })
+            }
+            type="button"
+          >
+            Select article technique
+          </button>
+          <TechniqueDetail curriculum={curriculumWithLinkedResources} />
+        </>
+      );
+    }
+
+    render(
+      <TechniqueSelectionProvider>
+        <ArticleHarness />
+      </TechniqueSelectionProvider>,
+    );
+
+    fireEvent.click(
+      screen.getByRole("button", { name: "Select article technique" }),
+    );
+
+    const articleLink = screen.getByRole("link", {
+      name: "Read the technique guide (article, opens in new tab)",
+    });
+
+    expect(articleLink.getAttribute("href")).toBe(
+      "https://example.com/article",
+    );
+    expect(articleLink.getAttribute("target")).toBe("_blank");
+    expect(articleLink.getAttribute("rel")).toContain("noopener");
+    expect(articleLink.getAttribute("rel")).toContain("noreferrer");
+    expect(screen.getByText("Article")).toBeDefined();
   });
 
   it("renders nothing when the selected occurrence cannot be resolved", () => {
