@@ -1,6 +1,10 @@
 import { describe, expect, it } from "vitest";
 
-import { findDojoBySlug } from "@/domain/dojo-directory";
+import {
+  findDojoBySlug,
+  searchDojos,
+  toDojoSearchRecord,
+} from "@/domain/dojo-directory";
 
 import { dojoDirectory } from "./dojo-directory";
 import { fortMyersKarate } from "./fort-myers-karate";
@@ -31,5 +35,15 @@ describe("dojoDirectory", () => {
 
   it("returns no entry for an unknown slug", () => {
     expect(findDojoBySlug(dojoDirectory, "unknown-dojo")).toBeUndefined();
+  });
+
+  it("finds dojos by case-insensitive name, location, and discipline", () => {
+    const records = dojoDirectory.map(toDojoSearchRecord);
+
+    expect(searchDojos(records, "FORT MYERS")).toHaveLength(1);
+    expect(searchDojos(records, "florida")).toHaveLength(1);
+    expect(searchDojos(records, "karate")).toHaveLength(1);
+    expect(searchDojos(records, "  ")).toEqual([]);
+    expect(searchDojos(records, "missing dojo")).toEqual([]);
   });
 });

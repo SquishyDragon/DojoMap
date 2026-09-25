@@ -10,6 +10,10 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 import FortMyersKaratePage from "./fort-myers-karate/page";
 import HomePage from "./page";
 
+vi.mock("next/navigation", () => ({
+  useRouter: () => ({ push: vi.fn() }),
+}));
+
 afterEach(cleanup);
 
 describe("HomePage", () => {
@@ -39,10 +43,8 @@ describe("HomePage", () => {
       screen.getByRole("search").querySelector('input[type="search"]'),
     ).not.toBeNull();
     expect(
-      screen.getByRole("button", {
-        name: "Dojo search is coming in the next step",
-      }).hasAttribute("disabled"),
-    ).toBe(true);
+      screen.getByRole("button", { name: "Open first matching dojo" }),
+    ).toBeDefined();
     expect(screen.queryByText("Fort Myers Karate")).toBeNull();
     expect(document.querySelector("[data-journey-scroll]")).toBeNull();
   });
