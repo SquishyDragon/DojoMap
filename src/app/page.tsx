@@ -3,10 +3,45 @@ import styles from "./page.module.css";
 export default function HomePage() {
   return (
     <main className={styles.main}>
-      <p className={styles.eyebrow}>DojoMap</p>
-      <h1>Your martial arts journey, mapped.</h1>
-      <p className={styles.description}>
-        Find your dojo. Explore your curriculum. Know what comes next.
+      <div className={styles.image} aria-hidden="true" />
+      <div className={styles.scrim} aria-hidden="true" />
+
+      <p className={styles.brand}>DojoMap</p>
+
+      <section className={styles.hero} aria-labelledby="hero-title">
+        <p className={styles.eyebrow}>Discipline lives here</p>
+        <h1 id="hero-title">
+          Your martial arts journey, <em>mapped.</em>
+        </h1>
+        <p className={styles.description}>
+          Find your dojo. Explore your curriculum. Know what comes next.
+        </p>
+
+        <div className={styles.search} role="search">
+          <label htmlFor="dojo-search">Search for your dojo</label>
+          <div className={styles.searchControl}>
+            <span className={styles.searchIcon} aria-hidden="true" />
+            <input
+              id="dojo-search"
+              name="dojo"
+              placeholder="Search by dojo or city"
+              type="search"
+            />
+            <button
+              aria-label="Dojo search is coming in the next step"
+              disabled
+              type="button"
+            >
+              <span aria-hidden="true">→</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <p className={styles.principles}>
+        <span>People</span>
+        <span>Progress</span>
+        <span>Community</span>
       </p>
     </main>
   );

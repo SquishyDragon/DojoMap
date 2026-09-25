@@ -23,6 +23,14 @@ describe("HomePage", () => {
       }),
     ).toBeDefined();
     expect(screen.getByText("DojoMap")).toBeDefined();
+    expect(
+      screen.getByRole("search").querySelector('input[type="search"]'),
+    ).not.toBeNull();
+    expect(
+      screen.getByRole("button", {
+        name: "Dojo search is coming in the next step",
+      }).hasAttribute("disabled"),
+    ).toBe(true);
     expect(screen.queryByText("Fort Myers Karate")).toBeNull();
     expect(document.querySelector("[data-journey-scroll]")).toBeNull();
   });

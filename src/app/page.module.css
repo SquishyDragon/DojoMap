@@ -1,34 +1,258 @@
 .main {
+  --hero-pad: clamp(1.5rem, 5vw, 5.5rem);
+  position: relative;
+  isolation: isolate;
   display: grid;
   min-height: 100vh;
   min-height: 100dvh;
-  align-content: center;
-  gap: 1.25rem;
-  padding: clamp(2rem, 8vw, 7rem);
-  color: #f7f5f0;
-  background: #080a0b;
+  grid-template-rows: auto 1fr auto;
+  overflow: hidden;
+  padding: clamp(1.5rem, 4vw, 3rem) var(--hero-pad);
+  color: #f6f4ef;
+  background: #050707;
+}
+
+.image,
+.scrim {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+}
+
+.image {
+  background-image: url("/dojo-hero.png");
+  background-position: center;
+  background-size: cover;
+  filter: contrast(1.04);
+  transform: scale(1.01);
+}
+
+.scrim {
+  z-index: -1;
+  background:
+    linear-gradient(90deg, rgba(3, 5, 5, 0.98) 0%, rgba(3, 5, 5, 0.88) 38%, rgba(3, 5, 5, 0.16) 72%),
+    linear-gradient(180deg, rgba(3, 5, 5, 0.25), transparent 45%, rgba(3, 5, 5, 0.72));
+}
+
+.brand {
+  width: fit-content;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(1.65rem, 3vw, 2.4rem);
+  font-weight: 700;
+  letter-spacing: -0.05em;
+}
+
+.hero {
+  display: grid;
+  width: min(48rem, 58vw);
+  align-self: center;
+  gap: clamp(1rem, 2.2vh, 1.5rem);
+  padding-block: 2.5rem;
 }
 
 .eyebrow {
-  color: #ef3f35;
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  color: #c8c8c4;
   font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+}
+
+.eyebrow::before {
+  width: 2.25rem;
+  height: 0.2rem;
+  content: "";
+  background: #ef3f35;
+}
+
+.hero h1 {
+  max-width: 11ch;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(3.75rem, 7.6vw, 8.2rem);
+  font-weight: 400;
+  line-height: 0.88;
+  letter-spacing: -0.065em;
+  text-wrap: balance;
+}
+
+.hero h1 em {
+  font-weight: 400;
+}
+
+.description {
+  max-width: 38rem;
+  color: #d2d2ce;
+  font-size: clamp(1rem, 1.6vw, 1.25rem);
+  line-height: 1.6;
+}
+
+.search {
+  display: grid;
+  gap: 0.65rem;
+  width: min(100%, 41rem);
+  margin-top: clamp(0.5rem, 1.2vh, 1rem);
+}
+
+.search > label {
+  font-size: 0.875rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.searchControl {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  min-height: 4.5rem;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.44);
+  border-radius: 999px;
+  background: #f8f8f6;
+  box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, 0.28);
+}
+
+.searchIcon {
+  width: 1rem;
+  height: 1rem;
+  margin-left: 1.7rem;
+  border: 2px solid #171a1b;
+  border-radius: 50%;
+}
+
+.searchIcon::after {
+  display: block;
+  width: 0.45rem;
+  height: 0.12rem;
+  content: "";
+  background: #171a1b;
+  transform: translate(0.68rem, 0.66rem) rotate(45deg);
+  transform-origin: left center;
+}
+
+.searchControl input {
+  min-width: 0;
+  height: 100%;
+  border: 0;
+  outline: 0;
+  padding: 0 1rem;
+  color: #111414;
+  background: transparent;
+  font: inherit;
+  font-size: 1rem;
+}
+
+.searchControl input::placeholder {
+  color: #6c7071;
+}
+
+.searchControl input:focus-visible {
+  box-shadow: inset 0 0 0 3px #ef3f35;
+}
+
+.searchControl button {
+  align-self: stretch;
+  width: 5rem;
+  border: 0;
+  color: #b9bdbc;
+  background: #101515;
+  font-size: 1.8rem;
+}
+
+.searchControl button:disabled {
+  cursor: not-allowed;
+  opacity: 1;
+}
+
+.principles {
+  display: flex;
+  gap: clamp(1.2rem, 3vw, 3rem);
+  align-items: center;
+  color: #aaaead;
+  font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 0.22em;
   text-transform: uppercase;
 }
 
-.main h1 {
-  max-width: 14ch;
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: clamp(3rem, 9vw, 7rem);
-  font-weight: 500;
-  line-height: 0.95;
-  letter-spacing: -0.05em;
+.principles span + span::before {
+  margin-right: clamp(1.2rem, 3vw, 3rem);
+  color: #ef3f35;
+  content: "/";
 }
 
-.description {
-  max-width: 42rem;
-  color: #c9c9c5;
-  font-size: clamp(1rem, 2vw, 1.25rem);
-  line-height: 1.6;
+@media (max-width: 760px) {
+  .main {
+    min-height: 100svh;
+    padding: 1.5rem;
+  }
+
+  .image {
+    background-position: 62% center;
+    opacity: 0.68;
+  }
+
+  .scrim {
+    background:
+      linear-gradient(90deg, rgba(3, 5, 5, 0.92), rgba(3, 5, 5, 0.38)),
+      linear-gradient(180deg, rgba(3, 5, 5, 0.2), rgba(3, 5, 5, 0.48) 58%, rgba(3, 5, 5, 0.92));
+  }
+
+  .hero {
+    width: 100%;
+    gap: 1rem;
+  }
+
+  .hero h1 {
+    max-width: 10ch;
+    font-size: clamp(3.2rem, 15vw, 5.2rem);
+  }
+
+  .description {
+    max-width: 28rem;
+  }
+
+  .searchControl {
+    min-height: 3.75rem;
+  }
+
+  .searchIcon {
+    margin-left: 1.25rem;
+  }
+
+  .searchControl button {
+    width: 4.25rem;
+  }
+
+  .principles {
+    gap: 0.65rem;
+    letter-spacing: 0.13em;
+  }
+
+  .principles span + span::before {
+    margin-right: 0.65rem;
+  }
+}
+
+@media (max-height: 700px) {
+  .main {
+    overflow-y: auto;
+  }
+
+  .hero {
+    padding-block: 2rem;
+  }
+
+  .hero h1 {
+    font-size: clamp(3.25rem, 11vh, 6rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .image {
+    transform: none;
+  }
 }
