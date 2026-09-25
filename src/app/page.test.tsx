@@ -7,8 +7,14 @@ import {
 } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
-import FortMyersKaratePage from "./fort-myers-karate/page";
+import { DojoJourney } from "@/components/dojo-journey/dojo-journey";
+import { fortMyersKarate } from "@/data/fort-myers-karate";
+
 import HomePage from "./page";
+
+function FortMyersKaratePage() {
+  return <DojoJourney dojo={fortMyersKarate} />;
+}
 
 vi.mock("next/navigation", () => ({
   useRouter: () => ({ push: vi.fn() }),

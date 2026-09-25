@@ -7,9 +7,9 @@ import { DojoIntro } from "@/components/dojo-intro/dojo-intro";
 import { ProgressionNavigator } from "@/components/progression-navigator/progression-navigator";
 import { TechniqueDetail } from "@/components/technique-detail/technique-detail";
 import { TechniqueSelectionProvider } from "@/components/technique-detail/technique-selection-context";
-import { fortMyersKarate } from "@/data/fort-myers-karate";
+import type { Dojo } from "@/domain/dojo";
 
-import styles from "./page.module.css";
+import styles from "./dojo-journey.module.css";
 
 function getJourneySections(scrollContainer: HTMLElement) {
   return Array.from(
@@ -30,8 +30,8 @@ function getCenteredSection(scrollContainer: HTMLElement) {
   }, { distance: Number.POSITIVE_INFINITY, section: sections[0] }).section;
 }
 
-export default function FortMyersKaratePage() {
-  const { curriculum } = fortMyersKarate;
+export function DojoJourney({ dojo }: { dojo: Dojo }) {
+  const { curriculum } = dojo;
   const journeyRef = useRef<HTMLElement>(null);
   const [currentRankId, setCurrentRankId] = useState<string | undefined>(
     curriculum.ranks[0]?.id,
@@ -107,7 +107,7 @@ export default function FortMyersKaratePage() {
         onScroll={handleScroll}
         ref={journeyRef}
       >
-        <DojoIntro dojo={fortMyersKarate} />
+        <DojoIntro dojo={dojo} />
         <ProgressionNavigator
           currentRankId={currentRankId}
           ranks={curriculum.ranks}
