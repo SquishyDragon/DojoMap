@@ -2,6 +2,7 @@ import { cleanup, fireEvent, render, screen } from "@testing-library/react";
 import { afterEach, describe, expect, it } from "vitest";
 
 import { karateCurriculum } from "@/data/karate-curriculum";
+import type { Curriculum } from "@/domain/curriculum";
 
 import { TechniqueDetail } from "./technique-detail";
 import {
@@ -10,6 +11,48 @@ import {
 } from "./technique-selection-context";
 
 afterEach(cleanup);
+
+const curriculumWithVideo = {
+  id: "video-curriculum",
+  name: "Video Curriculum",
+  discipline: "Karate",
+  ranks: [
+    {
+      id: "purple-belt",
+      name: "Purple Belt",
+      order: 6,
+      belt: { name: "Purple", color: "#704c8a" },
+      requirements: [
+        {
+          id: "purple-belt-techniques",
+          category: "Techniques",
+          items: [
+            {
+              type: "technique",
+              technique: {
+                id: "video-technique",
+                name: "Video technique",
+                description: "A technique with a supporting demonstration.",
+                resources: [
+                  {
+                    type: "video",
+                    label: "Watch the demonstration",
+                    url: "https://example.com/video",
+                  },
+                  {
+                    type: "video",
+                    label: "Invalid demonstration",
+                    url: "javascript:alert('unsafe')",
+                  },
+                ],
+              },
+            },
+          ],
+        },
+      ],
+    },
+  ],
+} as const satisfies Curriculum;
 
 function DetailHarness() {
   const { selectTechnique } = useTechniqueSelection();
@@ -109,6 +152,50 @@ describe("TechniqueDetail", () => {
         .getByRole("complementary", { name: "Ready stance" })
         .getAttribute("style"),
     ).toContain("--belt-color: #f5f5f5");
+  });
+
+  it("renders valid video resources as safe external links", () => {
+    function VideoHarness() {
+      const { selectTechnique } = useTechniqueSelection();
+
+      return (
+        <>
+          <button
+            onClick={() =>
+              selectTechnique({
+                techniqueId: "video-technique",
+                rankId: "purple-belt",
+              })
+            }
+            type="button"
+          >
+            Select video technique
+          </button>
+          <TechniqueDetail curriculum={curriculumWithVideo} />
+        </>
+      );
+    }
+
+    render(
+      <TechniqueSelectionProvider>
+        <VideoHarness />
+      </TechniqueSelectionProvider>,
+    );
+
+    fireEvent.click(
+      screen.getByRole("button", { name: "Select video technique" }),
+    );
+
+    const videoLink = screen.getByRole("link", {
+      name: "Watch the demonstration (video, opens in new tab)",
+    });
+
+    expect(videoLink.getAttribute("href")).toBe("https://example.com/video");
+    expect(videoLink.getAttribute("target")).toBe("_blank");
+    expect(videoLink.getAttribute("rel")).toContain("noopener");
+    expect(videoLink.getAttribute("rel")).toContain("noreferrer");
+    expect(screen.getByText("Video")).toBeDefined();
+    expect(screen.queryByText("Invalid demonstration")).toBeNull();
   });
 
   it("renders nothing when the selected occurrence cannot be resolved", () => {
